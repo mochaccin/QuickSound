@@ -39,6 +39,10 @@ public class UserManager {
         users.get(userId).setUserPassword(password);
     }
 
+    public void updateUserId(int userId, int newUserId) {
+        users.get(userId).setUserId(newUserId);
+    }
+
     public void deleteUser(int userId) {
         users.remove(userId);
     }
@@ -47,6 +51,10 @@ public class UserManager {
         return users.size()-1;
     }
 
-    public void updateUsersIds() {}
+    public void updateUsersIds(int index) {
+        for (int i = index+1; i < users.size(); i++) {
+            updateUserId(i, i-1);
+        }
+    }
 
 }

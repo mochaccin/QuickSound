@@ -30,6 +30,10 @@ public class User {
         this.password = userPassword;
     }
 
+    public void setUserId(int id) {
+        this.id = id;
+    }
+
     public void updateUserData(String userName, String userPassword){
         setUserName(userName);
         setUserPassword(userPassword);
