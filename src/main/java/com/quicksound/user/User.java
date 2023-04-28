@@ -39,4 +39,13 @@ public class User {
         setUserPassword(userPassword);
     }
 
+    @Override
+    public String
+    toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }
