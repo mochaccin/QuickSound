@@ -5,7 +5,7 @@ import com.quicksound.songs.Song;
 import com.quicksound.songs.SongLibrary;
 
 public class AppController {
-    private static volatile AppController instance = null;
+    private static AppController instance = null;
 
     private AppController() {}
 

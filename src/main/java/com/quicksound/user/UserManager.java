@@ -6,7 +6,7 @@ import java.util.List;
 
 public class UserManager {
 
-    private static volatile UserManager instance = null;
+    private static UserManager instance = null;
     private List<User> users = new ArrayList<>();
 
     private UserManager() {}

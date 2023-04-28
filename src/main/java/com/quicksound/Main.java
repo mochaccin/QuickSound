@@ -16,10 +16,5 @@ public class Main {
 
         sl.addSong(new Song("Rhapsody", "Toe", "Toe", "C:\\Users\\Mochaccin\\IdeaProjects\\QuickSound\\src\\main\\java\\Fight Song.wav", "The Beatles", 0));
         ac.displaySongs();
-
-        Player pl = new Player(sl.searchSongById(0).getFilePath());
-
-        pl.play();
-
     }
 }
