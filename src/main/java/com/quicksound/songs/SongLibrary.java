@@ -1,30 +1,12 @@
 package com.quicksound.songs;
 
-import com.quicksound.AppController;
-import com.quicksound.user.UserManager;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class SongLibrary {
-    private static SongLibrary instance = null;
-    private List<Song> songs;
-
-    private SongLibrary() {
-        songs = new ArrayList<Song>();
-    }
-
-    public static SongLibrary getInstance() {
-        SongLibrary result = instance;
-        if (result == null) {
-            synchronized (SongLibrary.class) {
-                if (result == null) {
-                    instance = new SongLibrary();
-                }
-            }
-        }
-        return instance;
-    }
+public enum SongLibrary {
+    INSTANCE;
+    private List<Song> songs = new ArrayList<>();
 
     public void addSong(Song song) {
         songs.add(song);
@@ -35,15 +17,9 @@ public class SongLibrary {
     }
 
     public List<Song> searchSong(String query) {
-        List<Song> results = new ArrayList<Song>();
-        for (Song song : songs) {
-            if (song.getTitle().toLowerCase().contains(query.toLowerCase()) ||
-                    song.getArtist().toLowerCase().contains(query.toLowerCase()) ||
-                    song.getAlbum().toLowerCase().contains(query.toLowerCase())) {
-                results.add(song);
-            }
-        }
-        return results;
+        return songs.stream().filter(song -> song.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+                song.getArtist().toLowerCase().contains(query.toLowerCase()) ||
+                song.getAlbum().toLowerCase().contains(query.toLowerCase())).toList();
     }
 
     public Song searchSongById(int id) {
@@ -52,10 +28,7 @@ public class SongLibrary {
 
     public void displaySongs() {
         System.out.println("Canciones disponibles: ");
-        for (Song song : songs) {
-            System.out.println(song.toString());
-        }
+        songs.forEach(song -> System.out.println(song.toString()));
     }
-
 
 }

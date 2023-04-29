@@ -1,27 +1,12 @@
 package com.quicksound.user;
 
-import com.quicksound.AppController;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserManager {
+public enum UserManager {
+    INSTANCE;
 
-    private static UserManager instance = null;
     private List<User> users = new ArrayList<>();
-
-    private UserManager() {}
-
-    public static UserManager getInstance() {
-        UserManager result = instance;
-        if (result == null) {
-            synchronized (AppController.class) {
-                if (result == null) {
-                    instance = new UserManager();
-                }
-            }
-        }
-        return instance;
-    }
 
     public void registerUser(String username, String password) {
         users.add(new User(username, password));
@@ -56,5 +41,7 @@ public class UserManager {
             updateUserId(i, i-1);
         }
     }
-
+    public List<User> getUsers() {
+        return users;
+    }
 }

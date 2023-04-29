@@ -1,33 +1,27 @@
 package com.quicksound;
 
+import com.quicksound.songs.Player;
 import com.quicksound.songs.Playlist;
 import com.quicksound.songs.Song;
 import com.quicksound.songs.SongLibrary;
+import com.quicksound.user.User;
 
-public class AppController {
-    private static AppController instance = null;
+public enum AppController {
+    INSTANCE;
 
-    private AppController() {}
-
-    public static AppController getInstance() {
-        AppController result = instance;
-        if (result == null) {
-            synchronized (AppController.class) {
-                if (result == null) {
-                    instance = new AppController();
-                }
-            }
-        }
-        return instance;
+    public void addSongToLibrary(Song song){
+        SongLibrary.INSTANCE.addSong(song);
     }
 
-    public void addSongToLibrary(Song song){}
+    public void createPlaylist(User user, String name){
+        user.addPlaylist(new Playlist(name));
+    }
 
-    public void createPlaylist(Playlist playlist){}
-
-    public void playSong(Song song){}
+    public void playSong(Song song){
+        Player.INSTANCE.setCurrentSong(song);
+    }
 
     public void displaySongs(){
-        SongLibrary.getInstance().displaySongs();
+        SongLibrary.INSTANCE.displaySongs();
     }
 }
