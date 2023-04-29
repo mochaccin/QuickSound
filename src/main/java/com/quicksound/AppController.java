@@ -17,8 +17,21 @@ public enum AppController {
         user.addPlaylist(new Playlist(name));
     }
 
+    public void playPlaylist(Playlist playlist){
+        Player.INSTANCE.playPlaylist(playlist);
+    }
+
     public void playSong(Song song){
-        Player.INSTANCE.setCurrentSong(song);
+        Player.INSTANCE.play(song);
+    }
+    public void pauseSong(){
+        Player.INSTANCE.pause();
+    }
+    public void resumeSong(){
+        Player.INSTANCE.resume();
+    }
+    public void stopSong(){
+        Player.INSTANCE.stop();
     }
 
     public void displaySongs(){

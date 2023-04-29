@@ -2,7 +2,8 @@ package com.quicksound.songs;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public enum SongLibrary {
     INSTANCE;
@@ -27,8 +28,7 @@ public enum SongLibrary {
     }
 
     public void displaySongs() {
-        System.out.println("Canciones disponibles: ");
-        songs.forEach(song -> System.out.println(song.toString()));
+        Logger.getLogger("Duke").log(Level.INFO, "Canciones Disponibles");
+        songs.forEach(song -> Logger.getLogger("Duke").log(Level.INFO, song.toString()));
     }
-
 }
