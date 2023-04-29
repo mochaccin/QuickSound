@@ -27,15 +27,6 @@ public class Song {
                 " " + duration + " ";
     }
 
-    public void play() {}
-
-    public void pause() {}
-
-    public void stop() {}
-
-    public void resume() {}
-
-
     public String getTitle() {
         return title;
     }
