@@ -67,7 +67,6 @@ public enum Player {
             for (Song song : playlist.getSongs()) {
                 play(song);
                 while (clip.getMicrosecondLength() != clip.getMicrosecondPosition()) {
-                    JOptionPane.showMessageDialog(null, "");
                 }
             }
 

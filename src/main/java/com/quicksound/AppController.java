@@ -37,4 +37,8 @@ public enum AppController {
     public void displaySongs(){
         SongLibrary.INSTANCE.displaySongs();
     }
+
+    public void displayMenu(){
+        Menu.INSTANCE.displayMenu();
+    }
 }
