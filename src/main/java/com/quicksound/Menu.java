@@ -1,8 +1,8 @@
 package com.quicksound;
 
 import com.quicksound.songs.SongLibrary;
+import com.quicksound.user.UserManager;
 
-import java.lang.reflect.Type;
 import java.util.Scanner;
 
 public enum Menu {
@@ -12,15 +12,30 @@ public enum Menu {
         displayMusicMenu();
     }
 
+
     private void displayMainMenu(){
+
+        System.out.println("[0] Iniciar Sesion\n[1] Crear Cuenta\n[2] Iniciar como invitado");
+        int option = takeInputInt(0, 2);
+
+        switch(option){
+            case 0:
+                displayLoginMenu();
+                break;
+            case 1:
+                displayRegisterMenu();
+                break;
+            default:
+                displayGuestUserMenu();
+                break;
+        }
 
     }
 
     private void displayMusicMenu(){
 
-        Scanner input = new Scanner(System.in);
-        System.out.println("[0] Desea reproducir una canción? [1] o una lista de canciones?");
-        int option = input.nextInt();
+        System.out.println("[0] Reproducir una canción. [1] Acceder al menu de playlists.");
+        int option = takeInputInt(0, 1);
 
         switch(option){
             case 0:
@@ -30,39 +45,73 @@ public enum Menu {
                 displayPlaylistMenu();
                 break;
             default:
-                displayMenu();
+                displayMusicMenu();
                 break;
         }
-
-
     }
 
-    private void displayUserMenu(){
+    private void displayLoginMenu(){}
 
+    private void displayRegisterMenu(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Por favor introduzca el nombre de usuario.");
+        String name = input.nextLine();
+
+        System.out.println("Por favor introduzca la contraseña.");
+        String password = input.nextLine();
+
+        UserManager.INSTANCE.registerUser(name, password);
+    }
+
+    private void displayGuestUserMenu(){
+        displayMusicMenu();
     }
 
     private void displayPlaylistMenu(){
     }
 
     private void displaySongMenu(){
-
-        Scanner input = new Scanner(System.in);
         System.out.println("Que cancion desea reproducir?");
-
-        int id = input.nextInt();
-
         SongLibrary.INSTANCE.displaySongs();
-        AppController.INSTANCE.playSong(SongLibrary.INSTANCE.searchSongById(id));
-        input.next();
-
     }
 
     private void exit(){
+        System.exit(0);
     }
 
-    private boolean validarRango(int num, int[] range){
-        if(range[0] >= num && num >= range[1]){
-            return false;
-        } return true;
+    private String takeInputString(){
+
+        Scanner input = new Scanner(System.in);
+        String str = "";
+
+        while(!str.matches("[a-zA-Z]+")){
+            try{
+                str = input.nextLine();
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return str;
+    }
+
+    private int takeInputInt(int min, int max){
+
+        Scanner input = new Scanner(System.in);
+        String str = "";
+        int value = 0;
+
+        while(!str.matches("\\d")){
+            try{
+                str = input.nextLine();
+                value = Integer.parseInt(str);
+                if (value < min || value > max){str = "";}
+            } catch(Exception e) {
+                System.out.println("Please enter a valid number");
+            }
+        }
+
+        return value;
+
     }
 }

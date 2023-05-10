@@ -9,7 +9,15 @@ public enum UserManager {
     private List<User> users = new ArrayList<>();
 
     public void registerUser(String username, String password) {
-        users.add(new User(username, password));
+        if (!checkDuplicateUser(username)){
+            users.add(new User(username, password));
+        } else {
+            System.out.println("El usuario ya se encuentra registrado.");
+        }
+    }
+
+    public boolean checkDuplicateUser(String username) {
+        return users.stream().anyMatch(user -> user.getName().equals(username));
     }
 
     public void updateUser(String username, String password, int userId) {
