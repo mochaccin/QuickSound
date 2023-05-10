@@ -15,6 +15,7 @@ public class User {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
+        id = UserManager.INSTANCE.nextUserId();
     }
 
     public String getName() {
@@ -64,6 +65,16 @@ public class User {
 
     public int getPlaylistSize(){
         return playlists.size();
+    }
+
+    public Playlist getLastUserPlaylist(){
+        return playlists.get(playlists.size()-1);
+    }
+
+    public void displayUserPlaylists() {
+        System.out.println("Playlists en tu biblioteca:");
+        int count = 0;
+        playlists.forEach(playlist -> System.out.println("["+(count+1)+"]"+ playlist.toString()));
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.quicksound;
 import com.quicksound.songs.Playlist;
 import com.quicksound.songs.Song;
 import com.quicksound.songs.SongLibrary;
+import com.quicksound.user.UserAuthentication;
+import com.quicksound.user.UserManager;
 
 public class Main {
     public static void main(String[] args) {

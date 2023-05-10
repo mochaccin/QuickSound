@@ -2,8 +2,28 @@ package com.quicksound.user;
 
 public enum UserAuthentication {
     INSTANCE;
-    public boolean authenticate(User user, String username, String password) {
-        return user.getName().equals(username) && user.getPassword().equals(password);
+    User currentUser;
+    public boolean authenticate(String username, String password) {
+        return UserManager.INSTANCE.getUsers().stream().anyMatch(
+                user -> user.getName().equals(username) && user.getPassword().equals(password)
+        );
+    }
+
+    public boolean login(String username, String password) {
+        if (authenticate(username, password)) {
+            currentUser = UserManager.INSTANCE.getUsers().stream().filter(
+                    user -> user.getName().equals(username) && user.getPassword().equals(password)
+            ).toList().get(0);
+            System.out.println("Inicio de sesion exitoso.");
+            return true;
+        } else {
+            System.out.println("El inicio de sesion ha fallado.");
+            return false;
+        }
+    }
+
+    public User getCurrentUser(){
+        return currentUser;
     }
 
 
