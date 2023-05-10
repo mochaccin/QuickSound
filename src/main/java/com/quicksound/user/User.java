@@ -63,7 +63,7 @@ public class User {
         return playlists.get(index);
     }
 
-    public int getPlaylistSize(){
+    public int getPlaylistsSize(){
         return playlists.size();
     }
 
@@ -73,8 +73,14 @@ public class User {
 
     public void displayUserPlaylists() {
         System.out.println("Playlists en tu biblioteca:");
-        int count = 0;
-        playlists.forEach(playlist -> System.out.println("["+(count+1)+"]"+ playlist.toString()));
+        int playlistId = 0;
+
+        for (Playlist playlist : playlists) {
+            System.out.println("["+playlistId+"] " + playlist.toString());
+            playlistId++;
+        }
+
+
     }
 
     @Override

@@ -31,7 +31,7 @@ public enum SongLibrary {
         return songs.size();
     }
     public void displaySongs() {
-        Logger.getLogger("Duke").log(Level.INFO, "Canciones Disponibles");
-        songs.forEach(song -> Logger.getLogger("Duke").log(Level.INFO, song.toString()));
+        System.out.println("Canciones disponibles en la biblioteca:");
+        songs.forEach(song -> System.out.println("["+song.getId()+"]" + song.toString()));
     }
 }

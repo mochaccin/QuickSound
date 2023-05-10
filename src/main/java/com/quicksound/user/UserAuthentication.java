@@ -22,6 +22,10 @@ public enum UserAuthentication {
         }
     }
 
+    public void logout() {
+        currentUser = null;
+    }
+
     public User getCurrentUser(){
         return currentUser;
     }

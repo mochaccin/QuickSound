@@ -25,19 +25,28 @@ public class Playlist {
         return songs;
     }
 
+    public Song getSongById(int index) {
+        return songs.get(index);
+    }
+
     public String getName() {
         return name;
     }
 
+    public void displaySongs(){
+        songs.forEach(song -> System.out.println("["+songs.indexOf(song)+"]" + song.toString()));
+    }
+
+    public int getSize() {
+        return songs.size();
+    }
+
+    public void removeSong(Song song) {
+        songs.remove(song);
+    }
+
     @Override
     public String toString() {
-
-         StringBuilder str = new StringBuilder("Playlist: " +
-                 name + " Songs: \n");
-
-        for (Song song : songs) {
-            str.append(song.toString());
-        }
-        return str.toString();
+        return "Playlist name: " + name;
     }
 }

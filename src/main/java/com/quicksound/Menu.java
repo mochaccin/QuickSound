@@ -1,5 +1,7 @@
 package com.quicksound;
 
+import com.quicksound.songs.Player;
+import com.quicksound.songs.Playlist;
 import com.quicksound.songs.SongLibrary;
 import com.quicksound.user.User;
 import com.quicksound.user.UserAuthentication;
@@ -18,15 +20,16 @@ public enum Menu {
 
     private void displayMainMenu(){
 
-        System.out.println("[0] Iniciar Sesion\n[1] Crear Cuenta\n[2] Iniciar como invitado");
+        System.out.println("[0] Iniciar Sesion\n[1] Crear Cuenta\n[2] Iniciar como invitado\n[3] Terminar ejecución");
         int option = takeInputInt(0, 2);
 
         switch (option) {
             case 0 -> displayLoginMenu();
             case 1 -> displayRegisterMenu();
-            default -> displayGuestUserMenu();
+            case 2 -> displayGuestUserMenu();
+            case 3 -> exit();
+            default -> displayMainMenu();
         }
-
     }
 
     private void displayMusicMenu(){
@@ -36,7 +39,7 @@ public enum Menu {
 
         switch (option) {
             case 0 -> displaySongMenu();
-            case 1 -> displayPlaylistMenu();
+            case 1 -> displayPlayPlaylistMenu();
             case 2 -> displayUserPlaylistsMenu();
             default -> displayMusicMenu();
         }
@@ -58,7 +61,7 @@ public enum Menu {
 
         User currentUser = UserAuthentication.INSTANCE.getCurrentUser();
 
-        if (currentUser.getPlaylistSize() == 0) {
+        if (currentUser.getPlaylistsSize() == 0) {
             System.out.println("Usted no tiene ninguna playlist.");
             displayUserPlaylistsMenu();
         } else {
@@ -88,9 +91,38 @@ public enum Menu {
     }
 
     private void displayRemoveSongMenu() {
+        User currentUser = UserAuthentication.INSTANCE.getCurrentUser();
+
+        System.out.println("Cual playlist desea modificar?");
+        currentUser.displayUserPlaylists();
+        int option = takeInputInt(0, currentUser.getPlaylistsSize());
+
+        Playlist playlist = currentUser.getPlaylist(option);
+
+        System.out.println("Que cancion deseas eliminar?");
+        playlist.displaySongs();
+        int target = takeInputInt(0, playlist.getSize());
+
+        playlist.removeSong(playlist.getSongById(target));
+        System.out.println("La cancion se ha eliminado exitosamente de la playlist.");
     }
 
     private void displayAddSongMenu() {
+
+        User currentUser = UserAuthentication.INSTANCE.getCurrentUser();
+
+        System.out.println("Cual playlist desea modificar?");
+        currentUser.displayUserPlaylists();
+        int option = takeInputInt(0, currentUser.getPlaylistsSize());
+
+        Playlist playlist = currentUser.getPlaylist(option);
+
+        System.out.println("Que cancion deseas agregar?");
+        playlist.displaySongs();
+        int target = takeInputInt(0, playlist.getSize());
+
+        playlist.addSong(playlist.getSongById(target));
+        System.out.println("La cancion se ha agregado exitosamente a la playlist.");
     }
 
     private void displayCreatePlaylistMenu() {
@@ -116,17 +148,16 @@ public enum Menu {
     }
 
     private void displayLoginMenu(){
-        String[] loginData = takeLoginInputs();
+        String[] loginData = takeTwoStringInputs();
 
         if(UserAuthentication.INSTANCE.login(loginData[0], loginData[1])) {
             displayUserMenu();
         } else {
             displayMainMenu();
         }
-
     }
 
-    private String[] takeLoginInputs(){
+    private String[] takeTwoStringInputs(){
         System.out.println("Por favor introduzca el nombre de usuario.");
         String name = takeInputString();
         System.out.println("Por favor introduzca la contraseña.");
@@ -138,42 +169,71 @@ public enum Menu {
 
         UserManager userManager = UserManager.INSTANCE;
 
-        String[] userData = takeRegisterInputs();
+        String[] userData = takeTwoStringInputs();
 
         userManager.registerUser(userData[0], userData[1]);
 
         if (!Objects.equals(userManager.getLastUser().getName(), userData[0])) {
             displayRegisterMenu();
         }
-
         displayMainMenu();
     }
 
-    private String[] takeRegisterInputs(){
-
-        System.out.println("Por favor introduzca el nombre de usuario.");
-        String name = takeInputString();
-        System.out.println("Por favor introduzca la contraseña.");
-        String password = takeInputString();
-        return new String[] {name, password};
-
-    }
-
     private void displayUserMenu() {
-        displayUserPlaylistsMenu();
-    }
-    private void displayGuestUserMenu(){
-        displayMusicMenu();
+        System.out.println("[0] Menu de reproduccion. [1] Menu de playlist. [2] Configuracion de la cuenta. [3] Cerrar sesion.");
+        int option = takeInputInt(0, 4);
+
+        switch (option) {
+            case 0 -> displayPlayerMenu();
+            case 1 -> displayUserPlaylistsMenu();
+            case 2 -> displayEditPlaylistMenu();
+            case 3 -> logout();
+            default -> displayUserMenu();
+        }
     }
 
-    private void displayPlaylistMenu(){
+    private void displayPlayerMenu() {
+        System.out.println("[0] Reproducir una cancion. [1] Reproducir una de mis playlists.");
+        int option = takeInputInt(0, 2);
+
+        switch (option) {
+            case 0 -> displaySongMenu();
+            case 1 -> displayPlayPlaylistMenu();
+            default -> displayUserMenu();
+        }
+    }
+
+    private void displayPlayPlaylistMenu() {
+        User currentUser = UserAuthentication.INSTANCE.getCurrentUser();
+        System.out.println("Que playlist deseas reproducir?");
+        currentUser.displayUserPlaylists();
+        int option = takeInputInt(0, currentUser.getPlaylistsSize());
+        AppController.INSTANCE.playPlaylist(currentUser.getPlaylist(option));
+    }
+
+    private void displayGuestUserMenu(){
+
+        System.out.println("[0] Reproducir una cancion. [1] Volver al menu principal.");
+        int option = takeInputInt(0, 2);
+
+        switch (option) {
+            case 0 -> displaySongMenu();
+            case 1 -> displayMainMenu();
+            default -> displayGuestUserMenu();
+        }
     }
 
     private void displaySongMenu(){
         System.out.println("Que cancion desea reproducir?");
         SongLibrary.INSTANCE.displaySongs();
+        int option = takeInputInt(0, SongLibrary.INSTANCE.getSongLibrarySize());
+        AppController.INSTANCE.playSong(SongLibrary.INSTANCE.searchSongById(option));
     }
 
+    private void logout() {
+        UserAuthentication.INSTANCE.logout();
+        displayMainMenu();
+    }
     private void exit(){
         System.exit(0);
     }
@@ -209,8 +269,6 @@ public enum Menu {
                 System.out.println("Please enter a valid number");
             }
         }
-
         return value;
-
     }
 }

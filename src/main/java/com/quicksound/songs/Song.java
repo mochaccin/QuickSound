@@ -21,7 +21,7 @@ public class Song {
 
     @Override
     public String toString() {
-        return "[" + id + "]" +
+        return "Cancion: " +
                 " " + title + " " + artist + " " +
                 " " + album + " " +
                 " " + duration + " ";
