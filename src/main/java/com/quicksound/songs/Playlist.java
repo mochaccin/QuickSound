@@ -33,6 +33,10 @@ public class Playlist {
         return name;
     }
 
+    public void changePlaylistName(String newName) {
+        name = newName;
+    }
+
     public void displaySongs(){
         songs.forEach(song -> System.out.println("["+songs.indexOf(song)+"]" + song.toString()));
     }

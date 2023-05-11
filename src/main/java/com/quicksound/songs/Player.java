@@ -13,20 +13,27 @@ public enum Player {
 
     private Song currentSong;
     private Clip clip;
+
     private Player() {
         try {
             File file = new File("src/main/java/Fight Song.wav");
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
+
         } catch (Exception e) {
             Logger.getLogger("SonarQube").log(Level.WARNING, e.getMessage());
         }
     }
 
-    public void play(Song song) {
+    public void play(Song song) throws InterruptedException {
         loadSong(song);
         clip.start();
+        System.out.println("Reproduciendo cancion: " + currentSong.getTitle());
+        while (clip.getMicrosecondLength() != clip.getMicrosecondPosition()) {
+            displayProgress();
+            Thread.sleep(1000);
+        }
     }
 
     public void pause() {
@@ -67,6 +74,8 @@ public enum Player {
             for (Song song : playlist.getSongs()) {
                 play(song);
                 while (clip.getMicrosecondLength() != clip.getMicrosecondPosition()) {
+                    displayProgress();
+                    Thread.sleep(1000);
                 }
             }
 
@@ -86,5 +95,13 @@ public enum Player {
         } catch (Exception e) {
             Logger.getLogger("Nico").log(Level.WARNING, e.getMessage());
         }
+    }
+
+    public void displayProgress() {
+        long microsecondPosition = clip.getMicrosecondPosition();
+        double secondPosition = (double) microsecondPosition / 1_000_000.0;
+        long minutes = (long) (secondPosition / 60);
+        long seconds = (long) (secondPosition % 60);
+        System.out.printf("Cancion: %s | Posición actual: %02d:%02d / %s %n", currentSong.getTitle(), minutes, seconds, currentSong.getDuration());
     }
 }
