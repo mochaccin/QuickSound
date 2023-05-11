@@ -100,7 +100,6 @@ public enum Menu {
                 case 2 -> displayEditPlaylistNameMenu(playlist);
                 case 3 -> displayDeletePlaylistMenu(playlist);
                 case 4 -> displayMusicMenu();
-                default -> displayMusicMenu();
             }
         }
     }
@@ -232,7 +231,7 @@ public enum Menu {
         int option = takeInputInt(0, 3);
 
         switch (option) {
-            case 0 -> displayPlayerMenu();
+            case 0 -> displayMusicMenu();
             case 1 -> displayUserPlaylistsMenu();
             case 2 -> displayUserConfigurationMenu();
             case 3 -> logout();
@@ -299,17 +298,6 @@ public enum Menu {
         displayUserMenu();
     }
 
-    private void displayPlayerMenu() throws InterruptedException {
-        System.out.println("[0] Reproducir una cancion. [1] Reproducir una de mis playlists. [2] Volver al menu de usuario.");
-        int option = takeInputInt(0, 2);
-
-        switch (option) {
-            case 0 -> displaySongMenu();
-            case 1 -> displayPlayPlaylistMenu();
-            case 2 -> displayUserMenu();
-            default -> displayUserMenu();
-        }
-    }
 
     private void displayPlayPlaylistMenu() throws InterruptedException {
         User currentUser = UserAuthentication.INSTANCE.getCurrentUser();
@@ -339,7 +327,6 @@ public enum Menu {
     }
 
     private void displaySongMenu() throws InterruptedException {
-        Scanner input = new Scanner(System.in);
 
         if (SongLibrary.INSTANCE.getSongLibrarySize() == 0) {
             System.out.println("No hay ninguna cancion disponible para reproducir.");
@@ -348,6 +335,12 @@ public enum Menu {
             SongLibrary.INSTANCE.displaySongs();
             int option = takeInputInt(0, SongLibrary.INSTANCE.getSongLibrarySize());
             AppController.INSTANCE.playSong(SongLibrary.INSTANCE.searchSongById(option));
+        }
+
+        if (UserAuthentication.INSTANCE.getCurrentUser() != null) {
+            displayMusicMenu();
+        } else {
+           displayGuestUserMenu();
         }
     }
 

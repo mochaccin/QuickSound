@@ -1,12 +1,11 @@
 package com.quicksound.app;
 
-import com.quicksound.songs.Player;
-import com.quicksound.songs.Playlist;
-import com.quicksound.songs.Song;
-import com.quicksound.songs.SongLibrary;
+import com.quicksound.songs.*;
 import com.quicksound.user.User;
 import com.quicksound.user.UserAuthentication;
 import com.quicksound.user.UserManager;
+
+import java.util.Arrays;
 
 public enum AppController {
     INSTANCE;
@@ -74,9 +73,6 @@ public enum AppController {
     }
 
     public void loadSongsToLibrary(){
-
-        SongLibrary songLibrary = SongLibrary.INSTANCE;
-        songLibrary.addSong(new Song("Rhapsody", "Toe", "Goodbye", "src/main/java/Fight Song.wav", "5:08", 0));
-        songLibrary.addSong(new Song("Sky of Twilight", "Kanako Itou", "Altier", "src/main/java/Sky of Twilight.wav", "6:21", 1));
+        SongLibrary.INSTANCE.loadLibrary();
     }
 }

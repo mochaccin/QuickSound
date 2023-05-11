@@ -2,8 +2,6 @@ package com.quicksound.songs;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public enum SongLibrary {
     INSTANCE;
@@ -33,5 +31,9 @@ public enum SongLibrary {
     public void displaySongs() {
         System.out.println("Canciones disponibles en la biblioteca:");
         songs.forEach(song -> System.out.println("["+song.getId()+"]" + song.toString()));
+    }
+
+    public void loadLibrary() {
+        songs = SongLoader.INSTANCE.loadSongs("src/main/resources/songs/");
     }
 }

@@ -16,7 +16,7 @@ public enum Player {
 
     private Player() {
         try {
-            File file = new File("src/main/java/Fight Song.wav");
+            File file = new File("src/main/resources/songs/Fight Song.wav");
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
@@ -70,8 +70,9 @@ public enum Player {
     public void playPlaylist(Playlist playlist){
 
         try {
-
+            int position = 1;
             for (Song song : playlist.getSongs()) {
+                System.out.println("Reproduciendo cancion numero: " +position+" / " + playlist.getSize());
                 play(song);
                 while (clip.getMicrosecondLength() != clip.getMicrosecondPosition()) {
                     displayProgress();
