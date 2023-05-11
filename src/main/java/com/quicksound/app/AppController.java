@@ -5,8 +5,6 @@ import com.quicksound.user.User;
 import com.quicksound.user.UserAuthentication;
 import com.quicksound.user.UserManager;
 
-import java.util.Arrays;
-
 public enum AppController {
     INSTANCE;
 
