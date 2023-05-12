@@ -7,14 +7,6 @@ public enum SongLibrary {
     INSTANCE;
     private List<Song> songs = new ArrayList<>();
 
-    public void addSong(Song song) {
-        songs.add(song);
-    }
-
-    public void removeSong(Song song) {
-        songs.remove(song);
-    }
-
     public List<Song> searchSong(String query) {
         return songs.stream().filter(song -> song.getTitle().toLowerCase().contains(query.toLowerCase()) ||
                 song.getArtist().toLowerCase().contains(query.toLowerCase()) ||
@@ -30,7 +22,7 @@ public enum SongLibrary {
     }
     public void displaySongs() {
         System.out.println("Canciones disponibles en la biblioteca:");
-        songs.forEach(song -> System.out.println("["+song.getId()+"]" + song.toString()));
+        songs.forEach(song -> System.out.println("["+song.getId()+"]" + song));
     }
 
     public void loadLibrary() {

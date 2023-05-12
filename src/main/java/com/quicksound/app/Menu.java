@@ -186,7 +186,7 @@ public enum Menu {
                 System.out.println("Que cancion deseas agregar?");
                 appController.displaySongs();
                 int option = takeInputInt(0, appController.getLibrarySize());
-                appController.addSongToUserPlaylist(currentUser, option);
+                appController.addSongToUserPlaylist(option);
             }
             System.out.println("Playlist creada exitosamente.");
         }
@@ -214,13 +214,10 @@ public enum Menu {
 
     private void displayRegisterMenu() throws InterruptedException {
 
-        UserManager userManager = UserManager.INSTANCE;
-
         String[] userData = takeRegisterInputs();
+        appController.registerUser(userData[0], userData[1]);
 
-        userManager.registerUser(userData[0], userData[1]);
-
-        if (!Objects.equals(userManager.getLastUser().getName(), userData[0])) {
+        if (!appController.isUserRegistered(userData)) {
             displayRegisterMenu();
         }
         displayMainMenu();
@@ -306,9 +303,11 @@ public enum Menu {
             System.out.println("Usted no tiene ninguna playlist.");
             displayMusicMenu();
         } else {
+
             System.out.println("Que playlist deseas reproducir?");
             currentUser.displayUserPlaylists();
             int option = takeInputInt(0, currentUser.getPlaylistsSize());
+
             if (currentUser.getPlaylist(option).getSize() != 0) {
                 appController.playPlaylist(currentUser.getPlaylist(option));
             } else {

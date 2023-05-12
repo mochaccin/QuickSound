@@ -63,9 +63,6 @@ public enum Player {
         return clip.getMicrosecondPosition();
     }
 
-    public Song getCurrentSong() {
-        return currentSong;
-    }
 
     public void playPlaylist(Playlist playlist){
 

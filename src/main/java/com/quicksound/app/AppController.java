@@ -32,12 +32,17 @@ public enum AppController {
         return UserAuthentication.INSTANCE.getCurrentUser();
     }
 
+    public boolean isUserRegistered(String[] userData){
+        return UserManager.INSTANCE.getUsers().stream().anyMatch(
+                user -> user.getName().equals(userData[0]) && user.getPassword().equals(userData[1]));
+    }
+
     public void registerUser(String username, String password){
         UserManager userManager = UserManager.INSTANCE;
         userManager.registerUser(username, password);
     }
 
-    public void addSongToUserPlaylist(User user, int id) {
+    public void addSongToUserPlaylist(int id) {
         User currentUser = UserAuthentication.INSTANCE.getCurrentUser();
         currentUser.getLastUserPlaylist().addSongById(id);
     }
@@ -92,7 +97,7 @@ public enum AppController {
         return true;
     }
 
-    public void logout() throws InterruptedException {
+    public void logout() {
         UserAuthentication.INSTANCE.logout();
     }
     public void loadSongsToLibrary(){
