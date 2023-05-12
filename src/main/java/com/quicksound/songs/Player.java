@@ -28,12 +28,20 @@ public enum Player {
 
     public void play(Song song) throws InterruptedException {
         loadSong(song);
-        clip.start();
-        System.out.println("Reproduciendo cancion: " + currentSong.getTitle());
-        while (clip.getMicrosecondLength() != clip.getMicrosecondPosition()) {
-            displayProgress();
-            Thread.sleep(1000);
+        try {
+            clip.start();
+            System.out.println("Reproduciendo cancion: " + currentSong.getTitle());
+            while (clip.getMicrosecondLength() != clip.getMicrosecondPosition()) {
+                displayProgress();
+                Thread.sleep(1000);
+            }
+        } catch (InterruptedException e) {
+            Logger.getLogger("Logger").log(Level.WARNING, e.getMessage());
+            Thread.currentThread().interrupt();
+        } catch (Exception e) {
+            Logger.getLogger("Logger").log(Level.WARNING, e.getMessage());
         }
+
     }
 
     public void pause() {
@@ -77,6 +85,9 @@ public enum Player {
                 }
             }
 
+        } catch (InterruptedException e){
+            Logger.getLogger("Logger").log(Level.WARNING, e.getMessage());
+            Thread.currentThread().interrupt();
         } catch (Exception e){
             Logger.getLogger("Logger").log(Level.WARNING, e.getMessage());
         }
@@ -91,7 +102,7 @@ public enum Player {
             clip.close();
             clip.open(audioInputStream);
         } catch (Exception e) {
-            Logger.getLogger("Nico").log(Level.WARNING, e.getMessage());
+            Logger.getLogger("Logger").log(Level.WARNING, e.getMessage());
         }
     }
 

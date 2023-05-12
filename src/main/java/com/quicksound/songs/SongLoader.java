@@ -60,7 +60,7 @@ public enum SongLoader {
             return new String[]{title, artist, album, genre, filePath, length};
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return new String[0];
     }

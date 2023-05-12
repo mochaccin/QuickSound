@@ -2,9 +2,6 @@ package com.quicksound.app;
 
 import com.quicksound.songs.Playlist;
 import com.quicksound.user.User;
-import com.quicksound.user.UserManager;
-
-import java.util.Objects;
 import java.util.Scanner;
 
 public enum Menu {
@@ -100,6 +97,7 @@ public enum Menu {
                 case 2 -> displayEditPlaylistNameMenu(playlist);
                 case 3 -> displayDeletePlaylistMenu(playlist);
                 case 4 -> displayMusicMenu();
+                default -> displayUserMenu();
             }
         }
     }
@@ -126,7 +124,7 @@ public enum Menu {
         currentUser.getUserPlaylists().remove(playlist);
         System.out.println("Playlist eliminada exitosamente.");
         displayMusicMenu();
-    };
+    }
 
     private void displayRemoveSongMenu(Playlist playlist) throws InterruptedException {
 
