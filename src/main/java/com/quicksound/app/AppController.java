@@ -8,10 +8,6 @@ import com.quicksound.user.UserManager;
 public enum AppController {
     INSTANCE;
 
-    public void addSongToLibrary(Song song){
-        SongLibrary.INSTANCE.addSong(song);
-    }
-
     public void createPlaylist(User user, String name){
         user.addPlaylist(new Playlist(name));
     }
@@ -22,6 +18,32 @@ public enum AppController {
 
     public void playSong(Song song) throws InterruptedException {
         Player.INSTANCE.play(song);
+    }
+
+    public Song searchSongById(int id) {
+        return SongLibrary.INSTANCE.searchSongById(id);
+    }
+
+    public int getLibrarySize(){
+        return SongLibrary.INSTANCE.getSongLibrarySize();
+    }
+
+    public User getCurrentUser() {
+        return UserAuthentication.INSTANCE.getCurrentUser();
+    }
+
+    public void registerUser(String username, String password){
+        UserManager userManager = UserManager.INSTANCE;
+        userManager.registerUser(username, password);
+    }
+
+    public void addSongToUserPlaylist(User user, int id) {
+        User currentUser = UserAuthentication.INSTANCE.getCurrentUser();
+        currentUser.getLastUserPlaylist().addSongById(id);
+    }
+
+    public boolean isUserLoggedIn(String username, String password){
+        return UserAuthentication.INSTANCE.login(username, password);
     }
     public void pauseSong(){
         Player.INSTANCE.pause();
@@ -70,6 +92,9 @@ public enum AppController {
         return true;
     }
 
+    public void logout() throws InterruptedException {
+        UserAuthentication.INSTANCE.logout();
+    }
     public void loadSongsToLibrary(){
         SongLibrary.INSTANCE.loadLibrary();
     }

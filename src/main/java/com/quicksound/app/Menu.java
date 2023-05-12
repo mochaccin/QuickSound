@@ -1,19 +1,19 @@
 package com.quicksound.app;
 
 import com.quicksound.songs.Playlist;
-import com.quicksound.songs.SongLibrary;
 import com.quicksound.user.User;
-import com.quicksound.user.UserAuthentication;
 import com.quicksound.user.UserManager;
 
 import java.util.Objects;
 import java.util.Scanner;
 
 public enum Menu {
+
     INSTANCE;
+    AppController appController = AppController.INSTANCE;
 
     public void displayMenu() throws InterruptedException {
-        AppController.INSTANCE.loadSongsToLibrary();
+        appController.loadSongsToLibrary();
         displayMainMenu();
     }
 
@@ -61,7 +61,7 @@ public enum Menu {
 
     private void displayRemovePlaylistMenu() throws InterruptedException {
 
-        User currentUser = UserAuthentication.INSTANCE.getCurrentUser();
+        User currentUser = appController.getCurrentUser();
 
         if (currentUser.getPlaylistsSize() == 0) {
             System.out.println("Usted no tiene ninguna playlist para eliminar.");
@@ -80,7 +80,7 @@ public enum Menu {
 
     private void displayEditPlaylistMenu() throws InterruptedException {
 
-        User currentUser = UserAuthentication.INSTANCE.getCurrentUser();
+        User currentUser = appController.getCurrentUser();
 
         if (currentUser.getPlaylistsSize() == 0) {
             System.out.println("Usted no tiene ninguna playlist para modificar.");
@@ -122,7 +122,7 @@ public enum Menu {
     }
 
     private void displayDeletePlaylistMenu(Playlist playlist) throws InterruptedException {
-        User currentUser = UserAuthentication.INSTANCE.getCurrentUser();
+        User currentUser = appController.getCurrentUser();
         currentUser.getUserPlaylists().remove(playlist);
         System.out.println("Playlist eliminada exitosamente.");
         displayMusicMenu();
@@ -147,14 +147,14 @@ public enum Menu {
 
     private void displayAddSongMenu(Playlist playlist) throws InterruptedException {
 
-        if (SongLibrary.INSTANCE.getSongLibrarySize() == 0) {
+        if (appController.getLibrarySize() == 0) {
 
             System.out.println("No hay canciones para agregar a la playlist.");
         } else {
 
             System.out.println("Que cancion deseas agregar?");
-            SongLibrary.INSTANCE.displaySongs();
-            int target = takeInputInt(0, SongLibrary.INSTANCE.getSongLibrarySize());
+            appController.displaySongs();
+            int target = takeInputInt(0, appController.getLibrarySize());
 
             playlist.addSongById(target);
             System.out.println("La cancion se ha agregado exitosamente a la playlist.");
@@ -164,29 +164,29 @@ public enum Menu {
 
     private void displayCreatePlaylistMenu() throws InterruptedException {
 
-        User currentUser = UserAuthentication.INSTANCE.getCurrentUser();
+        User currentUser = appController.getCurrentUser();
 
         System.out.println("Por favor ingrese el nombre de la playlist a crear.");
         String name = takeInputString();
 
-        if (SongLibrary.INSTANCE.getSongLibrarySize() == 0) {
+        if (appController.getLibrarySize() == 0) {
 
             System.out.println("Lamentablemente no hay canciones en la biblioteca para agregar. Pero puedes agregarlas mas adelante.");
-            AppController.INSTANCE.createPlaylist(currentUser, name);
+            appController.createPlaylist(currentUser, name);
             System.out.println("Playlist creada exitosamente.");
 
         } else {
 
             System.out.println("Por favor ingrese la cantidad de canciones iniciales a agregar.");
-            int cant = takeInputInt(0, SongLibrary.INSTANCE.getSongLibrarySize());
+            int cant = takeInputInt(0, appController.getLibrarySize());
 
-            AppController.INSTANCE.createPlaylist(currentUser, name);
+            appController.createPlaylist(currentUser, name);
 
             for (int i = 0; i < cant; i++) {
                 System.out.println("Que cancion deseas agregar?");
-                SongLibrary.INSTANCE.displaySongs();
-                int option = takeInputInt(0, SongLibrary.INSTANCE.getSongLibrarySize());
-                currentUser.getLastUserPlaylist().addSongById(option);
+                appController.displaySongs();
+                int option = takeInputInt(0, appController.getLibrarySize());
+                appController.addSongToUserPlaylist(currentUser, option);
             }
             System.out.println("Playlist creada exitosamente.");
         }
@@ -195,16 +195,16 @@ public enum Menu {
     }
 
     private void displayLoginMenu() throws InterruptedException {
-        String[] loginData = takeTwoStringInputs();
+        String[] loginData = takeRegisterInputs();
 
-        if(UserAuthentication.INSTANCE.login(loginData[0], loginData[1])) {
+        if(appController.isUserLoggedIn(loginData[0], loginData[1])) {
             displayUserMenu();
         } else {
             displayMainMenu();
         }
     }
 
-    private String[] takeTwoStringInputs(){
+    private String[] takeRegisterInputs(){
         System.out.println("Por favor introduzca el nombre de usuario.");
         String name = takeInputString();
         System.out.println("Por favor introduzca la contraseña.");
@@ -216,7 +216,7 @@ public enum Menu {
 
         UserManager userManager = UserManager.INSTANCE;
 
-        String[] userData = takeTwoStringInputs();
+        String[] userData = takeRegisterInputs();
 
         userManager.registerUser(userData[0], userData[1]);
 
@@ -259,7 +259,7 @@ public enum Menu {
         System.out.println("Por favor introduzca la nueva contraseña.");
         String newPassword = takeInputString();
 
-        if (AppController.INSTANCE.changeUserPassword(newPassword)) {
+        if (appController.changeUserPassword(newPassword)) {
             System.out.println("Contraseña cambiada exitosamente.");
         } else {
             System.out.println("La contraseña no se ha podido modificar.");
@@ -274,7 +274,7 @@ public enum Menu {
         int option = takeInputInt(0, 1);
 
         if (option == 0) {
-            AppController.INSTANCE.deleteUser();
+            appController.deleteUser();
             System.out.println("Nos vemos!");
             displayMainMenu();
         } else {
@@ -289,7 +289,7 @@ public enum Menu {
         System.out.println("Por favor introduzca el nuevo nombre de usuario.");
         String newUsername = takeInputString();
 
-        if (AppController.INSTANCE.changeUserUsername(newUsername)) {
+        if (appController.changeUserUsername(newUsername)) {
             System.out.println("Nombre de usuario cambiado exitosamente.");
         } else {
             System.out.println("El nombre de usuario no se ha podido modificar.");
@@ -300,7 +300,7 @@ public enum Menu {
 
 
     private void displayPlayPlaylistMenu() throws InterruptedException {
-        User currentUser = UserAuthentication.INSTANCE.getCurrentUser();
+        User currentUser = appController.getCurrentUser();
 
         if (currentUser.getPlaylistsSize() == 0) {
             System.out.println("Usted no tiene ninguna playlist.");
@@ -309,7 +309,12 @@ public enum Menu {
             System.out.println("Que playlist deseas reproducir?");
             currentUser.displayUserPlaylists();
             int option = takeInputInt(0, currentUser.getPlaylistsSize());
-            AppController.INSTANCE.playPlaylist(currentUser.getPlaylist(option));
+            if (currentUser.getPlaylist(option).getSize() != 0) {
+                appController.playPlaylist(currentUser.getPlaylist(option));
+            } else {
+                System.out.println("La playlist seleccionada esta vacia.");
+            }
+            displayMusicMenu();
         }
 
     }
@@ -328,16 +333,16 @@ public enum Menu {
 
     private void displaySongMenu() throws InterruptedException {
 
-        if (SongLibrary.INSTANCE.getSongLibrarySize() == 0) {
+        if (appController.getLibrarySize() == 0) {
             System.out.println("No hay ninguna cancion disponible para reproducir.");
         } else {
             System.out.println("Que cancion desea reproducir?");
-            SongLibrary.INSTANCE.displaySongs();
-            int option = takeInputInt(0, SongLibrary.INSTANCE.getSongLibrarySize());
-            AppController.INSTANCE.playSong(SongLibrary.INSTANCE.searchSongById(option));
+            appController.displaySongs();
+            int option = takeInputInt(0, appController.getLibrarySize());
+            appController.playSong(appController.searchSongById(option));
         }
 
-        if (UserAuthentication.INSTANCE.getCurrentUser() != null) {
+        if (appController.getCurrentUser() != null) {
             displayMusicMenu();
         } else {
            displayGuestUserMenu();
@@ -345,10 +350,11 @@ public enum Menu {
     }
 
     private void logout() throws InterruptedException {
-        UserAuthentication.INSTANCE.logout();
+        appController.logout();
         displayMainMenu();
     }
     private void exit(){
+        appController = null;
         System.exit(0);
     }
 

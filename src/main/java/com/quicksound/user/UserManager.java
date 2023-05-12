@@ -22,14 +22,6 @@ public enum UserManager {
         return users.stream().anyMatch(user -> user.getName().equals(username));
     }
 
-    public void updateUser(String username, String password, int userId) {
-        if (!checkDuplicateUser(username)) {
-            users.get(userId).updateUserData(username, password);
-        } else {
-            System.out.println("Ya hay un usuario registrado con ese nombre.");
-        }
-    }
-
     public void updateUserName(String username, int userId) {
         if (!checkDuplicateUser(username)) {
             users.get(userId).setUserName(username);
@@ -68,7 +60,6 @@ public enum UserManager {
     public User getLastUser() {
         return users.get(users.size()-1);
     }
-
     public void displayUsers() {
         users.forEach(user -> System.out.println(user.toString()));
     }
