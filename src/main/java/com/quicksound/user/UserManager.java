@@ -1,42 +1,41 @@
 package com.quicksound.user;
 
-import com.quicksound.AppController;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserManager {
 
-    private static volatile UserManager instance = null;
+public enum UserManager {
+    INSTANCE;
+
     private List<User> users = new ArrayList<>();
 
-    private UserManager() {}
-
-    public static UserManager getInstance() {
-        UserManager result = instance;
-        if (result == null) {
-            synchronized (AppController.class) {
-                if (result == null) {
-                    instance = new UserManager();
-                }
-            }
-        }
-        return instance;
-    }
-
     public void registerUser(String username, String password) {
-        users.add(new User(username, password));
+        if (!checkDuplicateUser(username)){
+            users.add(new User(username, password));
+            System.out.println("Usuario registrado exitosamente.");
+        } else {
+            System.out.println("El usuario ya se encuentra registrado.");
+        }
     }
 
-    public void updateUser(String username, String password, int userId) {
-        users.get(userId).updateUserData(username, password);
+    public boolean checkDuplicateUser(String username) {
+        return users.stream().anyMatch(user -> user.getName().equals(username));
     }
 
     public void updateUserName(String username, int userId) {
-        users.get(userId).setUserName(username);
+        if (!checkDuplicateUser(username)) {
+            users.get(userId).setUserName(username);
+        } else {
+            System.out.println("Ese nombre de usuario ya se encuentra registrado.");
+        }
     }
 
     public void updateUserPassword(String password, int userId) {
         users.get(userId).setUserPassword(password);
+    }
+
+    public void updateUserId(int userId, int newUserId) {
+        users.get(userId).setUserId(newUserId);
     }
 
     public void deleteUser(int userId) {
@@ -44,9 +43,24 @@ public class UserManager {
     }
 
     public int nextUserId() {
+        if (users.isEmpty()) {
+            return 0;
+        }
         return users.size()-1;
     }
 
-    public void updateUsersIds() {}
-
+    public void updateUsersIds(int index) {
+        for (int i = index+1; i < users.size(); i++) {
+            updateUserId(i, i-1);
+        }
+    }
+    public List<User> getUsers() {
+        return users;
+    }
+    public User getLastUser() {
+        return users.get(users.size()-1);
+    }
+    public void displayUsers() {
+        users.forEach(user -> System.out.println(user.toString()));
+    }
 }
