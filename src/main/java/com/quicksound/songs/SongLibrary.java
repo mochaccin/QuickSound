@@ -28,4 +28,8 @@ public enum SongLibrary {
     public void loadLibrary() {
         songs = SongLoader.INSTANCE.loadSongs("src/main/resources/songs/");
     }
+
+    public void clearLibrary() {
+        songs = new ArrayList<>();
+    }
 }

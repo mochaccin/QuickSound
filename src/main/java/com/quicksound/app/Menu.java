@@ -86,47 +86,45 @@ public enum Menu {
             System.out.println("Cual playlist desea modificar?");
             currentUser.displayUserPlaylists();
             int target = takeInputInt(0, currentUser.getUserPlaylists().size());
-            Playlist playlist = currentUser.getPlaylist(target);
 
             System.out.println("[0] Agregar cancion. [1] Eliminar una cancion. [2] Cambiar nombre de la playlist. [3] Borrar playlist. [4] Volver al menu de musica.");
             int option = takeInputInt(0, 4);
 
             switch (option) {
-                case 0 -> displayAddSongMenu(playlist);
-                case 1 -> displayRemoveSongMenu(playlist);
-                case 2 -> displayEditPlaylistNameMenu(playlist);
-                case 3 -> displayDeletePlaylistMenu(playlist);
+                case 0 -> displayAddSongMenu(target);
+                case 1 -> displayRemoveSongMenu(target);
+                case 2 -> displayEditPlaylistNameMenu(target);
+                case 3 -> displayDeletePlaylistMenu(target);
                 case 4 -> displayMusicMenu();
                 default -> displayUserMenu();
             }
         }
     }
 
-    private void displayEditPlaylistNameMenu(Playlist playlist) throws InterruptedException {
+    private void displayEditPlaylistNameMenu(int playlistId) throws InterruptedException {
         System.out.println("Por favor ingrese el nombre deseado.");
         String newName = takeInputString();
-        String oldName = playlist.getName();
+        String oldName = appController.getCurrentUser().getPlaylist(playlistId).getName();
 
 
         if (newName.equals(oldName)) {
             System.out.println("No se ha podido cambiar el nombre de la playlist.");
         } else {
-            playlist.changePlaylistName(newName);
+            appController.getCurrentUser().getPlaylist(playlistId).changePlaylistName(newName);
             System.out.println("Nombre cambiado exitosamente. Viejo nombre: " + oldName + " | Nuevo nombre: " + newName);
         }
-
         displayUserPlaylistsMenu();
-
     }
 
-    private void displayDeletePlaylistMenu(Playlist playlist) throws InterruptedException {
-        User currentUser = appController.getCurrentUser();
-        currentUser.getUserPlaylists().remove(playlist);
+    private void displayDeletePlaylistMenu(int playlistId) throws InterruptedException {
+        appController.getCurrentUser().getUserPlaylists().remove(playlistId);
         System.out.println("Playlist eliminada exitosamente.");
         displayMusicMenu();
     }
 
-    private void displayRemoveSongMenu(Playlist playlist) throws InterruptedException {
+    private void displayRemoveSongMenu(int playlistId) throws InterruptedException {
+
+        Playlist playlist = appController.getCurrentUser().getPlaylist(playlistId);
 
         if (playlist.getSize() == 0) {
             System.out.println("La playlist no tiene ninguna cancion para poder eliminar.");
@@ -143,18 +141,17 @@ public enum Menu {
         displayUserPlaylistsMenu();
     }
 
-    private void displayAddSongMenu(Playlist playlist) throws InterruptedException {
+    private void displayAddSongMenu(int playlistId) throws InterruptedException {
 
         if (appController.getLibrarySize() == 0) {
-
             System.out.println("No hay canciones para agregar a la playlist.");
         } else {
 
             System.out.println("Que cancion deseas agregar?");
             appController.displaySongs();
-            int target = takeInputInt(0, appController.getLibrarySize());
+            int songId = takeInputInt(0, appController.getLibrarySize());
 
-            playlist.addSongById(target);
+            appController.addSongToUserPlaylist(playlistId, songId);
             System.out.println("La cancion se ha agregado exitosamente a la playlist.");
         }
         displayUserPlaylistsMenu();
@@ -184,7 +181,7 @@ public enum Menu {
                 System.out.println("Que cancion deseas agregar?");
                 appController.displaySongs();
                 int option = takeInputInt(0, appController.getLibrarySize());
-                appController.addSongToUserPlaylist(option);
+                appController.addSongToUserPlaylist(currentUser.getPlaylistsSize()-1, option);
             }
             System.out.println("Playlist creada exitosamente.");
         }
@@ -195,7 +192,7 @@ public enum Menu {
     private void displayLoginMenu() throws InterruptedException {
         String[] loginData = takeRegisterInputs();
 
-        if(appController.isUserLoggedIn(loginData[0], loginData[1])) {
+        if(appController.login(loginData[0], loginData[1])) {
             displayUserMenu();
         } else {
             displayMainMenu();

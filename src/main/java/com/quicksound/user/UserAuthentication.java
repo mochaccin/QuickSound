@@ -2,7 +2,7 @@ package com.quicksound.user;
 
 public enum UserAuthentication {
     INSTANCE;
-    User currentUser;
+    private User currentUser = null;
     public boolean authenticate(String username, String password) {
         return UserManager.INSTANCE.getUsers().stream().anyMatch(
                 user -> user.getName().equals(username) && user.getPassword().equals(password)

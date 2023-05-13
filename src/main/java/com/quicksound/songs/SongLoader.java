@@ -52,8 +52,8 @@ public enum SongLoader {
             String genre = tag.getFirst(FieldKey.GENRE);
             int duration = audioFile.getAudioHeader().getTrackLength();
 
-            long minutes = (long) (duration / 60);
-            long seconds = (long) (duration % 60);
+            long minutes = duration / 60;
+            long seconds = duration % 60;
 
             String length = String.format("Duración: %02d:%02d", minutes, seconds);
 

@@ -37,17 +37,24 @@ public enum AppController {
                 user -> user.getName().equals(userData[0]) && user.getPassword().equals(userData[1]));
     }
 
+    public boolean isUserLoggedIn(String username, String password){
+        if (getCurrentUser()!= null) {
+            return username.equals(getCurrentUser().getName()) && password.equals(getCurrentUser().getPassword());
+        } return false;
+    }
+
     public void registerUser(String username, String password){
         UserManager userManager = UserManager.INSTANCE;
         userManager.registerUser(username, password);
     }
 
-    public void addSongToUserPlaylist(int id) {
+    public void addSongToUserPlaylist(int playlistId, int id) {
         User currentUser = UserAuthentication.INSTANCE.getCurrentUser();
-        currentUser.getLastUserPlaylist().addSongById(id);
+        currentUser.getPlaylist(playlistId).addSongById(id);
     }
 
-    public boolean isUserLoggedIn(String username, String password){
+    // login method.
+    public boolean login(String username, String password){
         return UserAuthentication.INSTANCE.login(username, password);
     }
     public void pauseSong(){
@@ -102,5 +109,9 @@ public enum AppController {
     }
     public void loadSongsToLibrary(){
         SongLibrary.INSTANCE.loadLibrary();
+    }
+
+    public void clearSongLibrary() {
+        SongLibrary.INSTANCE.clearLibrary();
     }
 }

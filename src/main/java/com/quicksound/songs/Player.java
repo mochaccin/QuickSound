@@ -113,4 +113,8 @@ public enum Player {
         long seconds = (long) (secondPosition % 60);
         System.out.printf("Cancion: %s | Posición actual: %02d:%02d / %s %n", currentSong.getTitle(), minutes, seconds, currentSong.getDuration());
     }
+
+    public Clip getClip() {
+        return clip;
+    }
 }
