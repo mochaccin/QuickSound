@@ -3,10 +3,7 @@ package com.quicksound.songs;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.*;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public enum Player {
     INSTANCE;
@@ -22,7 +19,7 @@ public enum Player {
             clip.open(audioInputStream);
 
         } catch (Exception e) {
-            Logger.getLogger("SonarQube").log(Level.WARNING, e.getMessage());
+            System.out.println("Un error ha ocurrido: " + e.getMessage());
         }
     }
 
@@ -36,23 +33,21 @@ public enum Player {
                 Thread.sleep(1000);
             }
         } catch (InterruptedException e) {
-            Logger.getLogger("Logger").log(Level.WARNING, e.getMessage());
+            System.out.println("Un error ha ocurrido: " + e.getMessage());
             Thread.currentThread().interrupt();
         } catch (Exception e) {
-            Logger.getLogger("Logger").log(Level.WARNING, e.getMessage());
+            System.out.println("Un error ha ocurrido: " + e.getMessage());
         }
 
     }
 
     public void pause() {
         clip.stop();
-        JOptionPane.showMessageDialog(null, "");
     }
 
     public void resume() {
         jump(getPosition());
         clip.start();
-        JOptionPane.showMessageDialog(null, "");
     }
 
     public void jump(long position) {
@@ -86,10 +81,10 @@ public enum Player {
             }
 
         } catch (InterruptedException e){
-            Logger.getLogger("Logger").log(Level.WARNING, e.getMessage());
+            System.out.println("Un error ha ocurrido: " + e.getMessage());
             Thread.currentThread().interrupt();
         } catch (Exception e){
-            Logger.getLogger("Logger").log(Level.WARNING, e.getMessage());
+            System.out.println("Un error ha ocurrido: " + e.getMessage());
         }
 
     }
@@ -102,7 +97,7 @@ public enum Player {
             clip.close();
             clip.open(audioInputStream);
         } catch (Exception e) {
-            Logger.getLogger("Logger").log(Level.WARNING, e.getMessage());
+            System.out.println("Un error ha ocurrido: " + e.getMessage());
         }
     }
 
@@ -114,7 +109,4 @@ public enum Player {
         System.out.printf("Cancion: %s | Posición actual: %02d:%02d / %s %n", currentSong.getTitle(), minutes, seconds, currentSong.getDuration());
     }
 
-    public Clip getClip() {
-        return clip;
-    }
 }
