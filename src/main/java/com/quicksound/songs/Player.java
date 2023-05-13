@@ -108,7 +108,7 @@ public enum Player {
 
     public void displayProgress() {
         long microsecondPosition = clip.getMicrosecondPosition();
-        double secondPosition = (double) microsecondPosition / 1_000_000.0;
+        double secondPosition = microsecondPosition / 1_000_000.0;
         long minutes = (long) (secondPosition / 60);
         long seconds = (long) (secondPosition % 60);
         System.out.printf("Cancion: %s | Posición actual: %02d:%02d / %s %n", currentSong.getTitle(), minutes, seconds, currentSong.getDuration());
