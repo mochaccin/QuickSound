@@ -102,7 +102,6 @@ public enum AppController {
         currentUser.setUserPassword(newPassword);
         return true;
     }
-
     public void logout() {
         UserAuthentication.INSTANCE.logout();
     }
