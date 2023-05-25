@@ -13,7 +13,7 @@ public enum Player {
 
     private Player() {
         try {
-            File file = new File("src/main/resources/songs/Fight Song.wav");
+            File file = new File("src/main/resources/songs/Sky of Twilight.wav");
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
@@ -42,7 +42,9 @@ public enum Player {
     }
 
     public void pause() {
-        clip.stop();
+        if (clip.isActive()) {
+            clip.stop();
+        }
     }
 
     public void resume() {
@@ -51,7 +53,9 @@ public enum Player {
     }
 
     public void jump(long position) {
-        clip.setMicrosecondPosition(position);
+        if (clip.isOpen()) {
+            clip.setMicrosecondPosition(position);
+        }
     }
     public void stop() {
         clip.stop();
@@ -59,11 +63,16 @@ public enum Player {
     }
 
     public void loop() {
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        if (clip.isActive()){
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        }
     }
 
     public long getPosition() {
-        return clip.getMicrosecondPosition();
+
+        if (clip.isRunning()) {
+            return clip.getMicrosecondPosition();
+        } return 0;
     }
 
 
@@ -102,11 +111,17 @@ public enum Player {
     }
 
     public void displayProgress() {
-        long microsecondPosition = clip.getMicrosecondPosition();
-        double secondPosition = microsecondPosition / 1_000_000.0;
-        long minutes = (long) (secondPosition / 60);
-        long seconds = (long) (secondPosition % 60);
-        System.out.printf("Cancion: %s | Posición actual: %02d:%02d / %s %n", currentSong.getTitle(), minutes, seconds, currentSong.getDuration());
+
+        if (clip.isActive()) {
+            long microsecondPosition = clip.getMicrosecondPosition();
+            double secondPosition = microsecondPosition / 1_000_000.0;
+            long minutes = (long) (secondPosition / 60);
+            long seconds = (long) (secondPosition % 60);
+            System.out.printf("Cancion: %s | Posición actual: %02d:%02d / %s %n", currentSong.getTitle(), minutes, seconds, currentSong.getDuration());
+        } else {
+            System.out.println("Actualmente no hay ninguna cancion reproduciendoce.");
+        }
+
     }
 
 }

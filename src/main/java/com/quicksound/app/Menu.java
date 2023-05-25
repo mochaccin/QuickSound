@@ -152,7 +152,6 @@ public enum Menu {
             int songId = takeInputInt(0, appController.getLibrarySize());
 
             appController.addSongToUserPlaylist(playlistId, songId);
-            System.out.println("La cancion se ha agregado exitosamente a la playlist.");
         }
         displayUserPlaylistsMenu();
     }

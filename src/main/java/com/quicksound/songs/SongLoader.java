@@ -33,35 +33,42 @@ public enum SongLoader {
             }
             return songs;
         } else {
-            System.out.println("Error loading songs");
+            System.out.println("No songs found.");
             return songs;
         }
     }
 
     public String[] getSongData(String filePath) {
+
         File file = new File(filePath);
-        LogManager.getLogManager().reset();
 
-        try {
-            AudioFile audioFile = AudioFileIO.read(file);
+        if (file.exists()){
+            LogManager.getLogManager().reset();
 
-            Tag tag = audioFile.getTag();
-            String title = tag.getFirst(FieldKey.TITLE);
-            String artist = tag.getFirst(FieldKey.ARTIST);
-            String album = tag.getFirst(FieldKey.ALBUM);
-            String genre = tag.getFirst(FieldKey.GENRE);
-            int duration = audioFile.getAudioHeader().getTrackLength();
+            try {
+                AudioFile audioFile = AudioFileIO.read(file);
 
-            long minutes = duration / 60;
-            long seconds = duration % 60;
+                Tag tag = audioFile.getTag();
+                String title = tag.getFirst(FieldKey.TITLE);
+                String artist = tag.getFirst(FieldKey.ARTIST);
+                String album = tag.getFirst(FieldKey.ALBUM);
+                String genre = tag.getFirst(FieldKey.GENRE);
+                int duration = audioFile.getAudioHeader().getTrackLength();
 
-            String length = String.format("Duración: %02d:%02d", minutes, seconds);
+                long minutes = duration / 60;
+                long seconds = duration % 60;
 
-            return new String[]{title, artist, album, genre, filePath, length};
+                String length = String.format("Duración: %02d:%02d", minutes, seconds);
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+                return new String[]{title, artist, album, genre, filePath, length};
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
         }
+
+        System.out.println("Song not found.");
         return new String[0];
     }
 }

@@ -14,15 +14,26 @@ public enum SongLibrary {
     }
 
     public Song searchSongById(int id) {
-        return songs.get(id);
+
+        if (!songs.isEmpty()) {
+            return songs.get(id);
+        }
+
+        System.out.println("No hay canciones en la libreria.");
+        return null;
     }
 
     public int getSongLibrarySize() {
         return songs.size();
     }
     public void displaySongs() {
-        System.out.println("Canciones disponibles en la biblioteca:");
-        songs.forEach(song -> System.out.println("["+song.getId()+"]" + song));
+
+        if (!songs.isEmpty()) {
+            System.out.println("Canciones disponibles en la biblioteca:");
+            songs.forEach(song -> System.out.println("["+song.getId()+"]" + song));
+        } else {
+            System.out.println("No hay canciones en la libreria.");
+        }
     }
 
     public void loadLibrary() {
@@ -30,6 +41,12 @@ public enum SongLibrary {
     }
 
     public void clearLibrary() {
-        songs = new ArrayList<>();
+        if (!songs.isEmpty()) {
+            songs.clear();
+        }
+    }
+
+    public boolean libraryIsEmpty(){
+        return songs.isEmpty();
     }
 }

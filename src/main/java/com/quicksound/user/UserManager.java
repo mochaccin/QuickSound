@@ -39,7 +39,11 @@ public enum UserManager {
     }
 
     public void deleteUser(int userId) {
-        users.remove(userId);
+
+        if (users.isEmpty()) {
+            users.remove(userId);
+        }
+
     }
 
     public int nextUserId() {
@@ -50,17 +54,28 @@ public enum UserManager {
     }
 
     public void updateUsersIds(int index) {
-        for (int i = index+1; i < users.size(); i++) {
-            updateUserId(i, i-1);
+
+        if (!users.isEmpty() && index != users.size()-1) {
+            for (int i = index+1; i < users.size(); i++) {
+                updateUserId(i, i-1);
+            }
         }
     }
     public List<User> getUsers() {
         return users;
     }
     public User getLastUser() {
-        return users.get(users.size()-1);
+
+        if (!users.isEmpty()) {
+            return users.get(users.size()-1);
+        } return null;
     }
     public void displayUsers() {
-        users.forEach(user -> System.out.println(user.toString()));
+
+        if (!users.isEmpty()) {
+            users.forEach(user -> System.out.println(user.toString()));
+        } else {
+            System.out.println("No hay usuarios registrados.");
+        }
     }
 }
