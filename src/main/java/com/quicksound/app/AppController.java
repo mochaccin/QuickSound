@@ -97,7 +97,6 @@ public enum AppController {
         User currentUser = UserAuthentication.INSTANCE.getCurrentUser();
 
         if (newPassword.equals(currentUser.getPassword())) {
-            System.out.println("La nueva contraseña es la misma.");
             return false;
         }
         currentUser.setUserPassword(newPassword);
