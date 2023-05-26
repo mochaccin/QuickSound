@@ -58,6 +58,7 @@ public enum Player {
                     displayProgress();
                     Thread.sleep(1000);
                 }
+                position++;
             }
 
         } catch (InterruptedException e){
