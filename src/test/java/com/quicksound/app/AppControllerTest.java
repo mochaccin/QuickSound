@@ -151,6 +151,18 @@ class AppControllerTest {
     }
 
     @Test
+    @DisplayName("Verify that the user password doesnt change if its the same one.")
+    void dontChangePassword() {
+
+        appController.registerUser(userData[0], userData[1]);
+        appController.login(userData[0], userData[1]);
+
+        appController.changeUserPassword("completo1234");
+        // Same password
+        assertFalse(appController.changeUserPassword("completo1234"));
+    }
+
+    @Test
     @DisplayName("Verify that the user logs out successfully.")
     void logout() {
 

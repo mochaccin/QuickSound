@@ -11,7 +11,7 @@ public enum Player {
     private Song currentSong;
     private Clip clip;
 
-    private Player() {
+    Player() {
         try {
             File file = new File("src/main/resources/songs/Sky of Twilight.wav");
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
@@ -40,41 +40,12 @@ public enum Player {
         }
 
     }
-
-    public void pause() {
-        if (clip.isActive()) {
-            clip.stop();
-        }
-    }
-
-    public void resume() {
-        jump(getPosition());
-        clip.start();
-    }
-
-    public void jump(long position) {
-        if (clip.isOpen()) {
-            clip.setMicrosecondPosition(position);
-        }
-    }
-    public void stop() {
-        clip.stop();
-        clip.close();
-    }
-
-    public void loop() {
-        if (clip.isActive()){
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        }
-    }
-
     public long getPosition() {
 
         if (clip.isRunning()) {
             return clip.getMicrosecondPosition();
         } return 0;
     }
-
 
     public void playPlaylist(Playlist playlist){
 

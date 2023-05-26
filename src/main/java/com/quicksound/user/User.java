@@ -48,17 +48,6 @@ public class User {
         }
     }
 
-    public void updateUserData(String userName, String userPassword){
-
-        if (!name.equals(userName) && !password.equals(userPassword)) {
-            setUserName(userName);
-            setUserPassword(userPassword);
-            System.out.println("Datos de cuenta cambiados exitosamente.");
-        } else {
-            System.out.println("Los nuevos datos de la cuenta son los mismos que antes.");
-        }
-    }
-
     public void addPlaylist(Playlist playlist){
         playlists.add(playlist);
     }
@@ -89,16 +78,6 @@ public class User {
 
     public int getPlaylistsSize(){
         return playlists.size();
-    }
-
-    public Playlist getLastUserPlaylist(){
-
-        if (playlists.isEmpty()) {
-            return playlists.get(playlists.size()-1);
-        } else {
-            System.out.println("Usted no tiene ninguna playlist.");
-            return null;
-        }
     }
 
     public void displayUserPlaylists() {

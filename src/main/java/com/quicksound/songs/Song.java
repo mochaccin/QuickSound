@@ -33,14 +33,6 @@ public class Song {
         return title;
     }
 
-    public String getArtist() {
-        return artist;
-    }
-
-    public String getAlbum() {
-        return album;
-    }
-
     public String getFilePath() {
         return filePath;
     }
@@ -57,7 +49,4 @@ public class Song {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 }

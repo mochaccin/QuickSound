@@ -40,7 +40,7 @@ public enum UserManager {
 
     public void deleteUser(int userId) {
 
-        if (users.isEmpty()) {
+        if (!users.isEmpty()) {
             users.remove(userId);
         }
 

@@ -13,10 +13,6 @@ public class Playlist {
         songs = new ArrayList<>();
     }
 
-    public void addSong(Song song) {
-        songs.add(song);
-    }
-
     public void addSongById(int index) {
 
         if (!SongLibrary.INSTANCE.libraryIsEmpty()) {

@@ -64,6 +64,7 @@ public enum SongLoader {
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
+                return new String[0];
             }
 
         }

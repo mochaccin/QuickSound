@@ -57,15 +57,6 @@ public enum AppController {
     public boolean login(String username, String password){
         return UserAuthentication.INSTANCE.login(username, password);
     }
-    public void pauseSong(){
-        Player.INSTANCE.pause();
-    }
-    public void resumeSong(){
-        Player.INSTANCE.resume();
-    }
-    public void stopSong(){
-        Player.INSTANCE.stop();
-    }
 
     public void displaySongs(){
         SongLibrary.INSTANCE.displaySongs();
