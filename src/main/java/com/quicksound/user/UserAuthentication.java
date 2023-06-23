@@ -27,7 +27,10 @@ public enum UserAuthentication {
     }
 
     public User getCurrentUser(){
-        return currentUser;
+
+        if (currentUser != null) {
+            return currentUser;
+        } return null;
     }
 
 

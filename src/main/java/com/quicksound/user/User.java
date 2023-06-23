@@ -31,20 +31,21 @@ public class User {
     }
 
     public void setUserName(String userName) {
-        this.name = userName;
+        if (!name.equals(userName)) {
+            this.name = userName;
+        }
     }
 
     public void setUserPassword(String userPassword) {
-        this.password = userPassword;
+        if (!password.equals(userPassword)) {
+            this.password = userPassword;
+        }
     }
 
-    public void setUserId(int id) {
-        this.id = id;
-    }
-
-    public void updateUserData(String userName, String userPassword){
-        setUserName(userName);
-        setUserPassword(userPassword);
+    public void setUserId(int newId) {
+        if (id != newId) {
+            this.id = newId;
+        }
     }
 
     public void addPlaylist(Playlist playlist){
@@ -52,7 +53,13 @@ public class User {
     }
 
     public void removePlaylist(Playlist playlist){
-        playlists.remove(playlist);
+
+        if (!playlists.isEmpty() && playlists.contains(playlist)) {
+            playlists.remove(playlist);
+        } else {
+            System.out.println("Usted no tiene ninguna playlist.");
+        }
+
     }
 
     public List<Playlist> getUserPlaylists(){
@@ -60,27 +67,32 @@ public class User {
     }
 
     public Playlist getPlaylist(int index){
-        return playlists.get(index);
+
+        if (!playlists.isEmpty()) {
+            return playlists.get(index);
+        } else {
+            System.out.println("Usted no tiene ninguna playlist.");
+            return null;
+        }
     }
 
     public int getPlaylistsSize(){
         return playlists.size();
     }
 
-    public Playlist getLastUserPlaylist(){
-        return playlists.get(playlists.size()-1);
-    }
-
     public void displayUserPlaylists() {
-        System.out.println("Playlists en tu biblioteca:");
-        int playlistId = 0;
 
-        for (Playlist playlist : playlists) {
-            System.out.println("["+playlistId+"] " + playlist.toString());
-            playlistId++;
+        if (!playlists.isEmpty()) {
+            System.out.println("Playlists en tu biblioteca:");
+            int playlistId = 0;
+
+            for (Playlist playlist : playlists) {
+                System.out.println("["+playlistId+"] " + playlist.toString());
+                playlistId++;
+            }
+        } else {
+            System.out.println("Usted no tiene ninguna playlist.");
         }
-
-
     }
 
     @Override

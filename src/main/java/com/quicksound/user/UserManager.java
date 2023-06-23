@@ -22,24 +22,12 @@ public enum UserManager {
         return users.stream().anyMatch(user -> user.getName().equals(username));
     }
 
-    public void updateUserName(String username, int userId) {
-        if (!checkDuplicateUser(username)) {
-            users.get(userId).setUserName(username);
-        } else {
-            System.out.println("Ese nombre de usuario ya se encuentra registrado.");
-        }
-    }
-
-    public void updateUserPassword(String password, int userId) {
-        users.get(userId).setUserPassword(password);
-    }
-
-    public void updateUserId(int userId, int newUserId) {
-        users.get(userId).setUserId(newUserId);
-    }
-
     public void deleteUser(int userId) {
-        users.remove(userId);
+
+        if (!users.isEmpty()) {
+            users.remove(userId);
+        }
+
     }
 
     public int nextUserId() {
@@ -48,19 +36,7 @@ public enum UserManager {
         }
         return users.size()-1;
     }
-
-    public void updateUsersIds(int index) {
-        for (int i = index+1; i < users.size(); i++) {
-            updateUserId(i, i-1);
-        }
-    }
     public List<User> getUsers() {
         return users;
-    }
-    public User getLastUser() {
-        return users.get(users.size()-1);
-    }
-    public void displayUsers() {
-        users.forEach(user -> System.out.println(user.toString()));
     }
 }

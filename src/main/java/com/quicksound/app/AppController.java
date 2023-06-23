@@ -57,15 +57,6 @@ public enum AppController {
     public boolean login(String username, String password){
         return UserAuthentication.INSTANCE.login(username, password);
     }
-    public void pauseSong(){
-        Player.INSTANCE.pause();
-    }
-    public void resumeSong(){
-        Player.INSTANCE.resume();
-    }
-    public void stopSong(){
-        Player.INSTANCE.stop();
-    }
 
     public void displaySongs(){
         SongLibrary.INSTANCE.displaySongs();
@@ -97,13 +88,11 @@ public enum AppController {
         User currentUser = UserAuthentication.INSTANCE.getCurrentUser();
 
         if (newPassword.equals(currentUser.getPassword())) {
-            System.out.println("La nueva contraseña es la misma.");
             return false;
         }
         currentUser.setUserPassword(newPassword);
         return true;
     }
-
     public void logout() {
         UserAuthentication.INSTANCE.logout();
     }

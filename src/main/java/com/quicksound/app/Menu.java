@@ -152,7 +152,6 @@ public enum Menu {
             int songId = takeInputInt(0, appController.getLibrarySize());
 
             appController.addSongToUserPlaylist(playlistId, songId);
-            System.out.println("La cancion se ha agregado exitosamente a la playlist.");
         }
         displayUserPlaylistsMenu();
     }
@@ -301,7 +300,7 @@ public enum Menu {
 
             System.out.println("Que playlist deseas reproducir?");
             currentUser.displayUserPlaylists();
-            int option = takeInputInt(0, currentUser.getPlaylistsSize());
+            int option = takeInputInt(0, currentUser.getPlaylistsSize()-1);
 
             if (currentUser.getPlaylist(option).getSize() != 0) {
                 appController.playPlaylist(currentUser.getPlaylist(option));
@@ -332,7 +331,7 @@ public enum Menu {
         } else {
             System.out.println("Que cancion desea reproducir?");
             appController.displaySongs();
-            int option = takeInputInt(0, appController.getLibrarySize());
+            int option = takeInputInt(0, appController.getLibrarySize()-1);
             appController.playSong(appController.searchSongById(option));
         }
 
@@ -357,7 +356,7 @@ public enum Menu {
         Scanner input = new Scanner(System.in);
         String str = "";
 
-        while(!str.matches("[a-zA-Z]+")){
+        while(!str.matches("[a-zA-Z\\d]+")){
             try{
                 str = input.nextLine();
             } catch(Exception e) {
@@ -380,7 +379,7 @@ public enum Menu {
                 value = Integer.parseInt(str);
                 if (value < min || value > max){str = "";}
             } catch(Exception e) {
-                System.out.println("Please enter a valid number");
+                System.out.println("Please enter a valid number.");
             }
         }
         return value;
