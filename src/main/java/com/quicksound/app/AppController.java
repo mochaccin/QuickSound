@@ -103,4 +103,8 @@ public enum AppController {
     public void clearSongLibrary() {
         SongLibrary.INSTANCE.clearLibrary();
     }
+
+    public boolean isInputStringValid(String input){
+        return input.matches("[a-zA-Z\\d]+");
+    }
 }

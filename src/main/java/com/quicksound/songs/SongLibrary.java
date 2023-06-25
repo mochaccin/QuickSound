@@ -42,4 +42,18 @@ public enum SongLibrary {
     public boolean libraryIsEmpty(){
         return songs.isEmpty();
     }
+
+    public String[] getSongsNames(){
+
+        String[] names = new String[songs.size()];
+
+        for (int i = 0; i < songs.size(); i++) {
+            names[i] = songs.get(i).getTitle();
+        }
+        return names;
+    }
+
+    public List<Song> getSongs() {
+        return songs;
+    }
 }

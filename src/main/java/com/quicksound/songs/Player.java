@@ -27,18 +27,28 @@ public enum Player {
         loadSong(song);
         try {
             clip.start();
-            System.out.println("Reproduciendo cancion: " + currentSong.getTitle());
-            while (clip.getMicrosecondLength() != clip.getMicrosecondPosition()) {
-                displayProgress();
-                Thread.sleep(1000);
-            }
-        } catch (InterruptedException e) {
-            System.out.println("Un error ha ocurrido: " + e.getMessage());
-            Thread.currentThread().interrupt();
         } catch (Exception e) {
             System.out.println("Un error ha ocurrido: " + e.getMessage());
         }
+    }
 
+    public long pause() {
+        long position = clip.getMicrosecondPosition();
+        clip.stop();
+        return position;
+    }
+
+    public void stop() {
+        clip.stop();
+    }
+
+    public void loop() {
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    public void resume(long position) {
+        clip.setMicrosecondPosition(position);
+        clip.start();
     }
     public long getPosition() {
 
@@ -68,6 +78,10 @@ public enum Player {
             System.out.println("Un error ha ocurrido: " + e.getMessage());
         }
 
+    }
+
+    public boolean isBusy() {
+        return clip.isActive();
     }
 
     public void loadSong(Song song) {
