@@ -62,10 +62,6 @@ public enum AppController {
         SongLibrary.INSTANCE.displaySongs();
     }
 
-    public void displayMenu() throws InterruptedException {
-        Menu.INSTANCE.displayMenu();
-    }
-
     public void deleteUser() {
         UserManager.INSTANCE.deleteUser(UserAuthentication.INSTANCE.getCurrentUser().getId());
         UserAuthentication.INSTANCE.logout();
