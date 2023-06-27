@@ -12,6 +12,8 @@ public enum GuiManager {
     SongsWindow songsWindow;
     PlaylistsWindow playlistsWindow;
 
+    PlaylistsMenuWindow playlistsMenuWindow;
+
     public void setUpGUIS(){
         welcomeWindow = new WelcomeWindow(800, 600);
         registerWindow = new RegisterWindow(800, 600);
@@ -21,6 +23,7 @@ public enum GuiManager {
         passwordWindow = new PasswordWindow(800, 600);
         songsWindow = new SongsWindow(800, 600);
         playlistsWindow = new PlaylistsWindow(800, 600);
+        playlistsMenuWindow = new PlaylistsMenuWindow(800, 600);
     }
 
     public RegisterWindow getRegisterWindow() {
@@ -53,5 +56,9 @@ public enum GuiManager {
 
     public PlaylistsWindow getPlaylistsWindow() {
         return playlistsWindow;
+    }
+
+    public PlaylistsMenuWindow getPlaylistsMenuWindow() {
+        return playlistsMenuWindow;
     }
 }

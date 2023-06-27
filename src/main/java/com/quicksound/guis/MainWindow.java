@@ -49,7 +49,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
         if (event.getSource() == menuPlaylistsButton) {
             setVisible(false);
-            GuiManager.INSTANCE.getPlaylistsWindow().setVisible(true);
+            GuiManager.INSTANCE.getPlaylistsMenuWindow().setVisible(true);
         }
 
     }

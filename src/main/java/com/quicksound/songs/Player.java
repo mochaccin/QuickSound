@@ -50,6 +50,11 @@ public enum Player {
         clip.setMicrosecondPosition(position);
         clip.start();
     }
+
+    public void clearPlayer() {
+        currentSong = null;
+        clip.close();
+    }
     public long getPosition() {
 
         if (clip.isRunning()) {

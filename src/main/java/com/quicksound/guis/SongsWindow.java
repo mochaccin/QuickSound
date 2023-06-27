@@ -17,6 +17,10 @@ public class SongsWindow extends JFrame implements ActionListener {
     private JButton randomizarButton;
     private JButton detenerButton;
     private JButton loopButton;
+    private JButton backButton;
+    private JButton _lastButtonPressed;
+    int timesPressed = 1;
+    long position = 0;
     private DefaultListModel<Song> model = new DefaultListModel<>();
 
     public SongsWindow(int width, int height) {
@@ -35,6 +39,7 @@ public class SongsWindow extends JFrame implements ActionListener {
         randomizarButton.addActionListener(this);
         detenerButton.addActionListener(this);
         loopButton.addActionListener(this);
+        backButton.addActionListener(this);
     }
 
     @Override
@@ -47,20 +52,47 @@ public class SongsWindow extends JFrame implements ActionListener {
                 if (!Player.INSTANCE.isBusy()){
                     try {
                         AppController.INSTANCE.playSong(AppController.INSTANCE.searchSongById(canciones.getSelectedIndex()));
-                        reproducirButton.setText("Pausar");
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    try {
+                        Player.INSTANCE.stop();
+                        AppController.INSTANCE.playSong(AppController.INSTANCE.searchSongById(canciones.getSelectedIndex()));
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 }
             }
+            _lastButtonPressed = reproducirButton;
+            detenerButton.setText("Pausar");
         }
 
         if (event.getSource() == detenerButton) {
-            Player.INSTANCE.stop();
+
+            if (_lastButtonPressed != detenerButton) {
+                detenerButton.setText("Pausar");
+            }
+
+            if (_lastButtonPressed == detenerButton && detenerButton.getText().equals("Reanudar")) {
+                timesPressed++;
+                detenerButton.setText("Pausar");
+                Player.INSTANCE.resume(position);
+            } else if (Player.INSTANCE.isBusy()) {
+                position = Player.INSTANCE.getPosition();
+                Player.INSTANCE.stop();
+                detenerButton.setText("Reanudar");
+                _lastButtonPressed = detenerButton;
+            } else if (!Player.INSTANCE.isBusy()) {
+                position = 0;
+                Player.INSTANCE.clearPlayer();
+            }
         }
 
         if (event.getSource() == loopButton) {
             Player.INSTANCE.loop();
+            _lastButtonPressed = loopButton;
+            detenerButton.setText("Pausar");
         }
 
         if (event.getSource() == randomizarButton) {
@@ -81,7 +113,15 @@ public class SongsWindow extends JFrame implements ActionListener {
                     throw new RuntimeException(e);
                 }
             }
+            detenerButton.setText("Pausar");
+            _lastButtonPressed = randomizarButton;
         }
 
+
+        if (event.getSource() == backButton) {
+            Player.INSTANCE.clearPlayer();
+            setVisible(false);
+            GuiManager.INSTANCE.getMainWindow().setVisible(true);
+        }
     }
 }
