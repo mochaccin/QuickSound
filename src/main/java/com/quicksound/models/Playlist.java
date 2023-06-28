@@ -1,4 +1,7 @@
-package com.quicksound.songs;
+package com.quicksound.models;
+
+import com.quicksound.models.Song;
+import com.quicksound.songs.SongLibrary;
 
 import java.util.ArrayList;
 import java.util.List;

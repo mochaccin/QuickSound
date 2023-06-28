@@ -1,5 +1,6 @@
 package com.quicksound.songs;
 
+import com.quicksound.models.Song;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

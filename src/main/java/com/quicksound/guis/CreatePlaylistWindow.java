@@ -44,6 +44,7 @@ public class CreatePlaylistWindow extends JFrame implements ActionListener {
                 UserAuthentication.INSTANCE.addPlaylist(playlistName.getText());
                 JOptionPane.showMessageDialog(this,"Playlist creada exitosamente.");
                 setVisible(false);
+                GuiManager.INSTANCE.setHasPlaylists(true);
                 GuiManager.INSTANCE.setUpGUIS();
                 GuiManager.INSTANCE.getPlaylistsMenuWindow().setVisible(true);
             }

@@ -1,6 +1,6 @@
 package com.quicksound.guis;
 
-import com.quicksound.songs.Playlist;
+import com.quicksound.models.Playlist;
 import com.quicksound.user.UserAuthentication;
 
 import javax.swing.*;

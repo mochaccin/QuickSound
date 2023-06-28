@@ -1,6 +1,7 @@
 package com.quicksound.user;
 
-import com.quicksound.songs.Playlist;
+import com.quicksound.models.User;
+import com.quicksound.models.Playlist;
 
 public enum UserAuthentication {
     INSTANCE;

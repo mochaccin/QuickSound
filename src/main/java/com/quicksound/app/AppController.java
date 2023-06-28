@@ -1,7 +1,9 @@
 package com.quicksound.app;
 
+import com.quicksound.models.Playlist;
+import com.quicksound.models.Song;
 import com.quicksound.songs.*;
-import com.quicksound.user.User;
+import com.quicksound.models.User;
 import com.quicksound.user.UserAuthentication;
 import com.quicksound.user.UserManager;
 

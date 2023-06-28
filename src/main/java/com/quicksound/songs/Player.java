@@ -1,5 +1,8 @@
 package com.quicksound.songs;
 
+import com.quicksound.models.Playlist;
+import com.quicksound.models.Song;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;

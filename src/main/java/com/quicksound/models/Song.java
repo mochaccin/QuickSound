@@ -1,4 +1,4 @@
-package com.quicksound.songs;
+package com.quicksound.models;
 
 public class Song {
 

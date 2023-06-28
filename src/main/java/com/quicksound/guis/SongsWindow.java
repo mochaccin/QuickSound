@@ -2,7 +2,7 @@ package com.quicksound.guis;
 
 import com.quicksound.app.AppController;
 import com.quicksound.songs.Player;
-import com.quicksound.songs.Song;
+import com.quicksound.models.Song;
 import com.quicksound.songs.SongLibrary;
 
 import javax.swing.*;
@@ -19,7 +19,6 @@ public class SongsWindow extends JFrame implements ActionListener {
     private JButton loopButton;
     private JButton backButton;
     private JButton _lastButtonPressed;
-    int timesPressed = 1;
     long position = 0;
     private DefaultListModel<Song> model = new DefaultListModel<>();
 
@@ -75,7 +74,6 @@ public class SongsWindow extends JFrame implements ActionListener {
             }
 
             if (_lastButtonPressed == detenerButton && detenerButton.getText().equals("Reanudar")) {
-                timesPressed++;
                 detenerButton.setText("Pausar");
                 Player.INSTANCE.resume(position);
             } else if (Player.INSTANCE.isBusy()) {

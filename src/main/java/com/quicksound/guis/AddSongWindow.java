@@ -1,7 +1,8 @@
 package com.quicksound.guis;
 
-import com.quicksound.songs.Song;
+import com.quicksound.models.Song;
 import com.quicksound.songs.SongLibrary;
+import com.quicksound.user.UserAuthentication;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,7 +33,21 @@ public class AddSongWindow extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent event) {
 
+        if (event.getSource() == backButton) {
+            setVisible(false);
+            GuiManager.INSTANCE.editPlaylistMenuWindow.setVisible(true);
+        }
+
+        if (event.getSource() == addSongButton) {
+
+            if (!songs.isSelectionEmpty()) {
+                UserAuthentication.INSTANCE.getCurrentUser().getPlaylist(
+                        GuiManager.INSTANCE.getPlaylistIndex()).addSongById(songs.getSelectedIndex()
+                );
+                JOptionPane.showMessageDialog(this, "Cancion agregada exitosamente.");
+            }
+        }
     }
 }

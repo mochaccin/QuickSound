@@ -40,7 +40,7 @@ public class EditPlaylistMenuWindow extends JFrame implements ActionListener {
 
         if (event.getSource() == addASongButton) {
             setVisible(false);
-
+            GuiManager.INSTANCE.getAddSongWindow().setVisible(true);
         }
     }
 }

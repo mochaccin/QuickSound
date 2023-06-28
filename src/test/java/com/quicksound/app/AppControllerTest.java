@@ -1,8 +1,8 @@
 package com.quicksound.app;
 
-import com.quicksound.songs.Playlist;
+import com.quicksound.models.Playlist;
 import com.quicksound.songs.SongLibrary;
-import com.quicksound.user.User;
+import com.quicksound.models.User;
 import com.quicksound.user.UserAuthentication;
 import com.quicksound.user.UserManager;
 import org.junit.jupiter.api.AfterEach;

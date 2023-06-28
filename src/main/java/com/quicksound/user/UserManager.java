@@ -1,5 +1,7 @@
 package com.quicksound.user;
 
+import com.quicksound.models.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
