@@ -1,6 +1,5 @@
 package com.quicksound.guis;
 
-import com.quicksound.app.AppController;
 import com.quicksound.services.UserAuthentication;
 import com.quicksound.services.UserManager;
 

@@ -1,6 +1,6 @@
 package com.quicksound.guis;
 
-import com.quicksound.app.AppController;
+import com.quicksound.services.UserAuthentication;
 import com.quicksound.services.UserManager;
 
 import javax.swing.*;
@@ -35,8 +35,8 @@ public class RegisterWindow extends JFrame implements ActionListener {
 
         if (event.getSource() == registerButton) {
 
-            boolean validName = AppController.INSTANCE.isInputStringValid(username.getText());
-            boolean validPassword = AppController.INSTANCE.isInputStringValid(password.getText());
+            boolean validName = UserAuthentication.INSTANCE.isInputStringValid(username.getText());
+            boolean validPassword = UserAuthentication.INSTANCE.isInputStringValid(password.getText());
             if(validName && validPassword){
                 UserManager.INSTANCE.registerUser(username.getText(), password.getText());
                 JOptionPane.showMessageDialog(this, "Usuario creado exitosamente");

@@ -1,6 +1,5 @@
 package com.quicksound.guis;
 
-import com.quicksound.app.AppController;
 import com.quicksound.services.Player;
 import com.quicksound.models.Song;
 import com.quicksound.services.SongLibrary;

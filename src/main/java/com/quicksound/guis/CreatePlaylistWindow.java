@@ -1,6 +1,5 @@
 package com.quicksound.guis;
 
-import com.quicksound.app.AppController;
 import com.quicksound.services.UserAuthentication;
 
 import javax.swing.*;
@@ -40,7 +39,7 @@ public class CreatePlaylistWindow extends JFrame implements ActionListener {
 
         if (event.getSource() == createButton) {
 
-            if (AppController.INSTANCE.isInputStringValid(playlistName.getText())) {
+            if (UserAuthentication.INSTANCE.isInputStringValid(playlistName.getText())) {
                 UserAuthentication.INSTANCE.addPlaylist(playlistName.getText());
                 JOptionPane.showMessageDialog(this,"Playlist creada exitosamente.");
                 setVisible(false);
