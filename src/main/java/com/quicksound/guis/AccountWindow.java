@@ -1,6 +1,7 @@
 package com.quicksound.guis;
 
 import com.quicksound.app.AppController;
+import com.quicksound.services.UserManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -36,7 +37,7 @@ public class AccountWindow extends JFrame implements ActionListener {
 
         if (event.getSource() == deleteAccountButton) {
             JOptionPane.showMessageDialog(this, "Cuenta eliminada exitosamente");
-            AppController.INSTANCE.deleteUser();
+            UserManager.INSTANCE.deleteUser();
             setVisible(false);
             GuiManager.INSTANCE.getWelcomeWindow().setVisible(true);
         }

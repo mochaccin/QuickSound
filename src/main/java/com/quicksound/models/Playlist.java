@@ -1,8 +1,8 @@
 package com.quicksound.models;
 
-import com.quicksound.models.Song;
-import com.quicksound.songs.SongLibrary;
+import com.quicksound.services.SongLibrary;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +20,12 @@ public class Playlist {
 
         if (!SongLibrary.INSTANCE.libraryIsEmpty()) {
             Song song = SongLibrary.INSTANCE.searchSongById(index);
+            songs.add(SongLibrary.INSTANCE.searchSongById(index));
             if (!songs.contains(song)) {
                 songs.add(SongLibrary.INSTANCE.searchSongById(index));
                 System.out.println("La cancion se ha agregado exitosamente a la playlist.");
             } else {
-                System.out.println("La cancion ya se encuentra en la playlist.");
+                JOptionPane.showMessageDialog(null ,"La cancion ya se encuentra en la playlist.");
             }
         } else {
             System.out.println("La libreria se encuentra vacia.");
@@ -57,26 +58,12 @@ public class Playlist {
         }
     }
 
-    public void displaySongs(){
-
-        if (!songs.isEmpty()) {
-            songs.forEach(song -> System.out.println("["+songs.indexOf(song)+"]" + song.toString()));
-        } else {
-            System.out.println("La playlist se encuentra vacia.");
-        }
-    }
-
     public int getSize() {
         return songs.size();
     }
 
-    public void removeSong(Song song) {
-
-        if (songs.contains(song)) {
-            songs.remove(song);
-        } else {
-            System.out.println("La cancion deseada no se encuentra en la playlist.");
-        }
+    public void removeSongById(int id) {
+        songs.remove(id);
     }
 
     @Override

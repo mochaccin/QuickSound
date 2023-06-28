@@ -1,9 +1,9 @@
 package com.quicksound.guis;
 
 import com.quicksound.app.AppController;
-import com.quicksound.songs.Player;
+import com.quicksound.services.Player;
 import com.quicksound.models.Song;
-import com.quicksound.songs.SongLibrary;
+import com.quicksound.services.SongLibrary;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -50,14 +50,14 @@ public class SongsWindow extends JFrame implements ActionListener {
 
                 if (!Player.INSTANCE.isBusy()){
                     try {
-                        AppController.INSTANCE.playSong(AppController.INSTANCE.searchSongById(canciones.getSelectedIndex()));
+                        Player.INSTANCE.play(SongLibrary.INSTANCE.searchSongById(canciones.getSelectedIndex()));
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 } else {
                     try {
                         Player.INSTANCE.stop();
-                        AppController.INSTANCE.playSong(AppController.INSTANCE.searchSongById(canciones.getSelectedIndex()));
+                        Player.INSTANCE.play(SongLibrary.INSTANCE.searchSongById(canciones.getSelectedIndex()));
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -99,14 +99,14 @@ public class SongsWindow extends JFrame implements ActionListener {
                 Player.INSTANCE.pause();
                 Random random = new Random();
                 try {
-                    AppController.INSTANCE.playSong(AppController.INSTANCE.searchSongById(random.nextInt(0, AppController.INSTANCE.getLibrarySize())));
+                    Player.INSTANCE.play(SongLibrary.INSTANCE.searchSongById(random.nextInt(0, SongLibrary.INSTANCE.getSongLibrarySize())));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             } else {
                 Random random = new Random();
                 try {
-                    AppController.INSTANCE.playSong(AppController.INSTANCE.searchSongById(random.nextInt(0, AppController.INSTANCE.getLibrarySize())));
+                    Player.INSTANCE.play(SongLibrary.INSTANCE.searchSongById(random.nextInt(0, SongLibrary.INSTANCE.getSongLibrarySize())));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

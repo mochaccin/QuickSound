@@ -1,6 +1,7 @@
 package com.quicksound.guis;
 
 import com.quicksound.app.AppController;
+import com.quicksound.services.UserAuthentication;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -35,10 +36,10 @@ public class WelcomeWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == logInButton) {
 
-            boolean validName = AppController.INSTANCE.isInputStringValid(username.getText());
-            boolean validPassword = AppController.INSTANCE.isInputStringValid(password.getText());
+            boolean validName = UserAuthentication.INSTANCE.isInputStringValid(username.getText());
+            boolean validPassword = UserAuthentication.INSTANCE.isInputStringValid(password.getText());
             if(validName && validPassword){
-                if (AppController.INSTANCE.login(username.getText(), password.getText())) {
+                if (UserAuthentication.INSTANCE.login(username.getText(), password.getText())) {
                     JOptionPane.showMessageDialog(this, "Sesion iniciada exitosamente");
                     setVisible(false);
                     GuiManager.INSTANCE.login();

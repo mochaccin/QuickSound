@@ -1,6 +1,6 @@
 package com.quicksound.models;
 
-import com.quicksound.user.UserManager;
+import com.quicksound.services.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;

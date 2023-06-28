@@ -1,7 +1,7 @@
-package com.quicksound.songs;
+package com.quicksound.services;
 
+import com.quicksound.models.Playlist;
 import com.quicksound.models.Song;
-import com.quicksound.user.UserAuthentication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,9 +60,9 @@ public enum SongLibrary {
         return songs;
     }
 
-    public List<Song> availableSongs(int index) {
+    public List<Song> availableSongs(Playlist playlist) {
         return songs.stream().filter(song ->
-                !UserAuthentication.INSTANCE.getCurrentUser().getPlaylist(index).getSongs().contains(song)
+                !playlist.getSongs().contains(song)
         ).toList();
     }
 }

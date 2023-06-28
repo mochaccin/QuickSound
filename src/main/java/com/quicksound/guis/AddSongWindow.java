@@ -1,8 +1,8 @@
 package com.quicksound.guis;
 
 import com.quicksound.models.Song;
-import com.quicksound.songs.SongLibrary;
-import com.quicksound.user.UserAuthentication;
+import com.quicksound.services.SongLibrary;
+import com.quicksound.services.UserAuthentication;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -29,7 +29,7 @@ public class AddSongWindow extends JFrame implements ActionListener {
         addSongButton.addActionListener(this);
         backButton.addActionListener(this);
         songs.setModel(model);
-        model.addAll(SongLibrary.INSTANCE.availableSongs(GuiManager.INSTANCE.getPlaylistIndex()));
+        model.addAll(SongLibrary.INSTANCE.availableSongs(UserAuthentication.INSTANCE.getCurrentUser().getPlaylist(GuiManager.INSTANCE.getPlaylistIndex())));
     }
 
     @Override
@@ -46,6 +46,8 @@ public class AddSongWindow extends JFrame implements ActionListener {
                 UserAuthentication.INSTANCE.getCurrentUser().getPlaylist(
                         GuiManager.INSTANCE.getPlaylistIndex()).addSongById(songs.getSelectedIndex()
                 );
+                model.remove(songs.getSelectedIndex());
+                GuiManager.INSTANCE.setUpGUIS();
                 JOptionPane.showMessageDialog(this, "Cancion agregada exitosamente.");
             }
         }

@@ -1,4 +1,4 @@
-package com.quicksound.user;
+package com.quicksound.services;
 
 import com.quicksound.models.User;
 import com.quicksound.models.Playlist;
@@ -25,6 +25,12 @@ public enum UserAuthentication {
         }
     }
 
+    public boolean isUserLoggedIn(String username, String password){
+        if (currentUser != null) {
+            return username.equals(currentUser.getName()) && password.equals(currentUser.getPassword());
+        } return false;
+    }
+
     public void logout() {
         currentUser = null;
     }
@@ -39,4 +45,10 @@ public enum UserAuthentication {
     public void addPlaylist(String name) {
         currentUser.addPlaylist(new Playlist(name));
     }
+
+    public boolean isInputStringValid(String input){
+        return input.matches("[a-zA-Z\\d]+");
+    }
+
+
 }

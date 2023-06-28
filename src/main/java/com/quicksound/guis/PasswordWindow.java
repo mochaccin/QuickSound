@@ -1,6 +1,8 @@
 package com.quicksound.guis;
 
 import com.quicksound.app.AppController;
+import com.quicksound.services.UserAuthentication;
+import com.quicksound.services.UserManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -33,8 +35,8 @@ public class PasswordWindow extends JFrame implements ActionListener {
 
         if (event.getSource() == changePasswordButton) {
 
-            if (AppController.INSTANCE.isInputStringValid(newPassword.getText())) {
-                if (AppController.INSTANCE.changeUserPassword(newPassword.getText())) {
+            if (UserAuthentication.INSTANCE.isInputStringValid(newPassword.getText())) {
+                if (UserManager.INSTANCE.changeUserPassword(newPassword.getText())) {
                     JOptionPane.showMessageDialog(this, "Contraseña cambiada exitosamente");
                     setVisible(false);
                     GuiManager.INSTANCE.getMainWindow().setVisible(true);

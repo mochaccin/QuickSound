@@ -23,6 +23,9 @@ public enum GuiManager {
     PlayPlaylistWindow playPlaylistWindow;
 
     AddSongWindow addSongWindow;
+    RemoveSongWindow removeSongWindow;
+
+    EditPlaylistWindow editPlaylistWindow;
 
     private boolean isUserLoggedIn = false;
     private boolean hasPlaylists = false;
@@ -46,6 +49,8 @@ public enum GuiManager {
                 playPlaylistWindow = new PlayPlaylistWindow(800, 600);
                 editPlaylistMenuWindow = new EditPlaylistMenuWindow(800, 600);
                 addSongWindow = new AddSongWindow(800, 600);
+                removeSongWindow = new RemoveSongWindow(800, 600);
+                editPlaylistWindow = new EditPlaylistWindow(800, 600);
             }
         }
     }
@@ -102,8 +107,16 @@ public enum GuiManager {
         return playPlaylistWindow;
     }
 
+    public EditPlaylistWindow getEditPlaylistWindow() {
+        return editPlaylistWindow;
+    }
+
     public AddSongWindow getAddSongWindow() {
         return addSongWindow;
+    }
+
+    public RemoveSongWindow getRemoveSongWindow() {
+        return removeSongWindow;
     }
 
     private void setUserLoggedIn(boolean userLoggedIn) {

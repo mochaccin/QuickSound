@@ -1,9 +1,9 @@
 package com.quicksound.guis;
 
 import com.quicksound.app.AppController;
-import com.quicksound.songs.Player;
+import com.quicksound.services.Player;
 import com.quicksound.models.Song;
-import com.quicksound.user.UserAuthentication;
+import com.quicksound.services.UserAuthentication;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -60,14 +60,14 @@ public class PlayPlaylistWindow extends JFrame implements ActionListener {
 
                 if (!Player.INSTANCE.isBusy()){
                     try {
-                        AppController.INSTANCE.playSong(playlist.get(songs.getSelectedIndex()));
+                        Player.INSTANCE.play(playlist.get(songs.getSelectedIndex()));
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 } else {
                     try {
                         Player.INSTANCE.stop();
-                        AppController.INSTANCE.playSong(playlist.get(songs.getSelectedIndex()));
+                        Player.INSTANCE.play(playlist.get(songs.getSelectedIndex()));
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -109,14 +109,14 @@ public class PlayPlaylistWindow extends JFrame implements ActionListener {
                 Player.INSTANCE.pause();
                 Random random = new Random();
                 try {
-                    AppController.INSTANCE.playSong(playlist.get(random.nextInt(0, playlist.size())));
+                    Player.INSTANCE.play(playlist.get(random.nextInt(0, playlist.size())));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             } else {
                 Random random = new Random();
                 try {
-                    AppController.INSTANCE.playSong(playlist.get(random.nextInt(0, playlist.size())));
+                    Player.INSTANCE.play(playlist.get(random.nextInt(0, playlist.size())));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

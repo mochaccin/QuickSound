@@ -1,6 +1,7 @@
 package com.quicksound.guis;
 
-import com.quicksound.app.AppController;
+import com.quicksound.services.UserAuthentication;
+import com.quicksound.services.UserManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,8 +33,8 @@ public class UsernameWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent event) {
 
         if (event.getSource() == changeUsernameButton) {
-            if (AppController.INSTANCE.isInputStringValid(username.getText())) {
-                if (AppController.INSTANCE.changeUserUsername(username.getText())) {
+            if (UserAuthentication.INSTANCE.isInputStringValid(username.getText())) {
+                if (UserManager.INSTANCE.changeUserUsername(username.getText())) {
                     JOptionPane.showMessageDialog(this, "Nombre cambiado exitosamente");
                     setVisible(false);
                     GuiManager.INSTANCE.getMainWindow().setVisible(true);

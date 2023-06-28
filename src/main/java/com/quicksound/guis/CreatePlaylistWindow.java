@@ -1,7 +1,7 @@
 package com.quicksound.guis;
 
 import com.quicksound.app.AppController;
-import com.quicksound.user.UserAuthentication;
+import com.quicksound.services.UserAuthentication;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

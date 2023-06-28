@@ -1,4 +1,4 @@
-package com.quicksound.songs;
+package com.quicksound.services;
 
 import com.quicksound.models.Song;
 import org.jaudiotagger.audio.AudioFile;

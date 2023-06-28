@@ -42,5 +42,10 @@ public class EditPlaylistMenuWindow extends JFrame implements ActionListener {
             setVisible(false);
             GuiManager.INSTANCE.getAddSongWindow().setVisible(true);
         }
+
+        if (event.getSource() == deleteASongButton) {
+            setVisible(false);
+            GuiManager.INSTANCE.getRemoveSongWindow().setVisible(true);
+        }
     }
 }
