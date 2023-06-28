@@ -43,5 +43,19 @@ public class PlaylistsMenuWindow extends JFrame implements ActionListener {
             GuiManager.INSTANCE.getMainWindow().setVisible(true);
         }
 
+        if (event.getSource() == editarUnaPlaylistButton) {
+
+        }
+
+        if (event.getSource() == eliminarUnaPlaylistButton) {
+            setVisible(false);
+            GuiManager.INSTANCE.getDeletePlaylistWindow().setVisible(true);
+        }
+
+        if (event.getSource() == crearUnaPlaylistButton) {
+            setVisible(false);
+            GuiManager.INSTANCE.getCreatePlaylistWindow().setVisible(true);
+        }
+
     }
 }

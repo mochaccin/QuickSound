@@ -58,10 +58,6 @@ public enum AppController {
         return UserAuthentication.INSTANCE.login(username, password);
     }
 
-    public void displaySongs(){
-        SongLibrary.INSTANCE.displaySongs();
-    }
-
     public void deleteUser() {
         UserManager.INSTANCE.deleteUser(UserAuthentication.INSTANCE.getCurrentUser().getId());
         UserAuthentication.INSTANCE.logout();

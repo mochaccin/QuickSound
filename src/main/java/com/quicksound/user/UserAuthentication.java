@@ -1,5 +1,7 @@
 package com.quicksound.user;
 
+import com.quicksound.songs.Playlist;
+
 public enum UserAuthentication {
     INSTANCE;
     private User currentUser = null;
@@ -33,5 +35,7 @@ public enum UserAuthentication {
         } return null;
     }
 
-
+    public void addPlaylist(String name) {
+        currentUser.addPlaylist(new Playlist(name));
+    }
 }

@@ -14,6 +14,18 @@ public enum GuiManager {
 
     PlaylistsMenuWindow playlistsMenuWindow;
 
+    DeletePlaylistWindow deletePlaylistWindow;
+
+    EditPlaylistMenuWindow editPlaylistMenuWindow;
+
+    CreatePlaylistWindow createPlaylistWindow;
+
+    PlayPlaylistWindow playPlaylistWindow;
+
+    private boolean isUserLoggedIn = false;
+    private boolean hasPlaylists = false;
+    private int playlistIndex;
+
     public void setUpGUIS(){
         welcomeWindow = new WelcomeWindow(800, 600);
         registerWindow = new RegisterWindow(800, 600);
@@ -22,8 +34,14 @@ public enum GuiManager {
         usernameWindow = new UsernameWindow(800, 600);
         passwordWindow = new PasswordWindow(800, 600);
         songsWindow = new SongsWindow(800, 600);
-        playlistsWindow = new PlaylistsWindow(800, 600);
         playlistsMenuWindow = new PlaylistsMenuWindow(800, 600);
+        createPlaylistWindow = new CreatePlaylistWindow(800, 600);
+
+        if (isUserLoggedIn) {
+            deletePlaylistWindow = new DeletePlaylistWindow(800, 600);
+            playlistsWindow = new PlaylistsWindow(800, 600);
+            if (hasPlaylists) {playPlaylistWindow = new PlayPlaylistWindow(800, 600);}
+        }
     }
 
     public RegisterWindow getRegisterWindow() {
@@ -60,5 +78,49 @@ public enum GuiManager {
 
     public PlaylistsMenuWindow getPlaylistsMenuWindow() {
         return playlistsMenuWindow;
+    }
+
+    public DeletePlaylistWindow getDeletePlaylistWindow() {
+        return deletePlaylistWindow;
+    }
+
+    public EditPlaylistMenuWindow getEditPlaylistMenuWindow() {
+        return editPlaylistMenuWindow;
+    }
+
+    public CreatePlaylistWindow getCreatePlaylistWindow() {
+        return createPlaylistWindow;
+    }
+
+    public PlayPlaylistWindow getPlayPlaylistWindow() {
+        return playPlaylistWindow;
+    }
+
+    private void setUserLoggedIn(boolean userLoggedIn) {
+        this.isUserLoggedIn = userLoggedIn;
+    }
+
+    public void login(){
+        setUserLoggedIn(true);
+        setUpGUIS();
+        getMainWindow().setVisible(true);
+    }
+
+    public void enablePlayPlaylists(int index){
+        setHasPlaylists(true);
+        setUpGUIS();
+        setPlaylistIndex(index);
+        playPlaylistWindow.setVisible(true);
+    }
+    public void setHasPlaylists(boolean hasPlaylists) {
+        this.hasPlaylists = hasPlaylists;
+    }
+
+    public int getPlaylistIndex() {
+        return playlistIndex;
+    }
+
+    public void setPlaylistIndex(int playlistIndex) {
+        this.playlistIndex = playlistIndex;
     }
 }

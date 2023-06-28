@@ -117,7 +117,6 @@ public class SongsWindow extends JFrame implements ActionListener {
             _lastButtonPressed = randomizarButton;
         }
 
-
         if (event.getSource() == backButton) {
             Player.INSTANCE.clearPlayer();
             setVisible(false);

@@ -41,7 +41,7 @@ public class WelcomeWindow extends JFrame implements ActionListener {
                 if (AppController.INSTANCE.login(username.getText(), password.getText())) {
                     JOptionPane.showMessageDialog(this, "Sesion iniciada exitosamente");
                     setVisible(false);
-                    GuiManager.INSTANCE.getMainWindow().setVisible(true);
+                    GuiManager.INSTANCE.login();
                 } else { JOptionPane.showMessageDialog(this, "La cuenta no existe"); }
             } else {
                 JOptionPane.showMessageDialog(this, "Por favor introduzca valores validos");

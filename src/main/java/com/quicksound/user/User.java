@@ -42,12 +42,6 @@ public class User {
         }
     }
 
-    public void setUserId(int newId) {
-        if (id != newId) {
-            this.id = newId;
-        }
-    }
-
     public void addPlaylist(Playlist playlist){
         playlists.add(playlist);
     }
@@ -61,7 +55,9 @@ public class User {
         }
 
     }
-
+    public void removePlaylistByIndex(int index){
+        playlists.remove(index);
+    }
     public List<Playlist> getUserPlaylists(){
         return playlists;
     }
@@ -78,21 +74,6 @@ public class User {
 
     public int getPlaylistsSize(){
         return playlists.size();
-    }
-
-    public void displayUserPlaylists() {
-
-        if (!playlists.isEmpty()) {
-            System.out.println("Playlists en tu biblioteca:");
-            int playlistId = 0;
-
-            for (Playlist playlist : playlists) {
-                System.out.println("["+playlistId+"] " + playlist.toString());
-                playlistId++;
-            }
-        } else {
-            System.out.println("Usted no tiene ninguna playlist.");
-        }
     }
 
     @Override
